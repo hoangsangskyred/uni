@@ -1,0 +1,58 @@
+html, body {height: 100%;}
+body {
+    background-color: #ecedf2;
+}
+.sideBar {
+    width: 270px; background-color: #363f48;
+    left: 0; top: 0;
+    min-height: 100%;
+}
+.sideBar .logoContainer {
+    width: 100%; height: 50px; box-sizing: border-box;
+    display: block; padding-top: .5rem; padding-bottom: .5rem;
+}
+.sideBar .logoContainer img {max-height: 40px;}
+.topBar {
+    margin-left: 270px; width: calc(100% - 270px); height: 50px; box-sizing: border-box; position: relative;
+    display: block; background-color: #dfe0e7; border-bottom: 1px solid #c7cad2;
+}
+.pageContent {
+    margin-left: 270px; width: calc(100% - 270px); height: calc(100% - 50px); position: relative;
+    display: block; padding: .5rem 1rem;
+}
+
+.sideMenu {display: block;margin-top: 1rem;}
+.sideMenu a{
+    padding: .5rem .5rem .5rem 1rem;
+    display: block;
+    transition: all .25s ease-in-out;
+    background-color: transparent;
+    text-decoration: none; color: #a58838;
+    position: relative;
+}
+.sideMenu a:hover {
+    background-color: #27313b; color: #fff;
+}
+.sideBar .has-dropdown {
+    transition: all .5s ease-in-out;
+}
+.sideBar .has-dropdown .dropdown-toggle::after {
+    position: absolute; top: 50%; right: 1rem;
+    transform: translateY(-50%);
+}
+.sideBar .active {
+    background-color: #27313b; color: #fff;
+}
+.sideBar .active>a {color: #fff;}
+.sideBar .has-dropdown.active ul>li>a {
+    padding-left: 2rem;
+}
+.sideBar .has-dropdown.active ul.show {
+    padding-bottom: .5rem;
+}
+.sideBar .has-dropdown.active ul>li>a:hover {
+    background-color: #27313b;
+}
+input[type=file]::-webkit-file-upload-button {
+    display: none;
+}
