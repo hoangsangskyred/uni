@@ -10,7 +10,8 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-md-3">
-                    <span>Tổng số: {{$counts}} Khách hàng</span>
+                    <span>Có {{$counts}} trong tổng số {{$customers->total()}} khách hàng đã tìm thấy</span>
+                    <span></span>
                 </div>
                  <div class="col-md-6">
                     <form action="{{route($name.'.search')}}" method="get">
@@ -44,7 +45,8 @@
                     <th width="70px">Action</th>     
                 </tr>
                 <tbody>
-                @forelse($customers as $customer)
+                @if($customers->isNotEmpty())    
+                @foreach($customers as $customer)
                     <tr>
                         <td>{{$customer->id}}</td>
                         <td>{{$customer->first_name}}</td>
@@ -87,15 +89,16 @@
                         
                         </td>
                     </tr>
-                @empty
+                    @endforeach
+                    @else 
                     <tr>
                         <td colspan="4">
                             <div class="alert alert-danger mb-0">
-                                <i class="fas fa-exclamation-circle"></i> Không có khách hàng nào
+                                <i class="fas fa-exclamation-circle"></i> Không tìm thấy
                             </div>
                         </td>
                     </tr>
-                @endforelse
+                @endif
                 </tbody>
                 </thead>
              </table>

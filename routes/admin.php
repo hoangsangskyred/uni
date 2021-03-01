@@ -27,7 +27,7 @@ Route::resources([
     'users' => UserController::class,
     'customers' =>CustomerController::class,
 ]);
-
+Route::get('/search',[CustomerController::class,'search'])->name('customers.search');
 Route::post('/profile/reset-password', [ProfileController::class, 'resetPassword'])->name('profile.resetPassword');
 
 Route::group(['prefix' => 'lfm'], function () {

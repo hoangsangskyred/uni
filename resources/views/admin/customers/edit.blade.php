@@ -92,7 +92,7 @@
                         <button type="submit" class="btn btn-theme px-5">
                             Lưu
                         </button>
-                        <a href="{{$controller->getRedirectLink()}}" class="btn btn-secondary">
+                        <a href="{{url()->previous()}}" class="btn btn-secondary">
                             Thoát
                         </a>
                     </div>

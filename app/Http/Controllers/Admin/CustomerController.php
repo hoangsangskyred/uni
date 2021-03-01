@@ -22,16 +22,16 @@ class CustomerController extends Controller
      */
     protected $name ='admin.customers';
     protected $view ='admin.customers';
-    protected $paginNumber = 5;
+    protected $limit = 5;
     
   
     public function index(Request $request)
-    {
+    { 
         $this->setRedirectLink($request);
-        $data['customers'] = Customer::orderBy('id', 'asc')->paginate($this->paginNumber);
+        $data['customers'] = Customer::orderBy('id', 'asc')->paginate($this->limit);
         $data['counts'] =Customer::all()->count();
         $data['name']  = $this->name;
-        return view($this->view .'.index',$data);
+        return view($this->view .'.index',$data)->withController($this);
     
     }
 
@@ -43,7 +43,7 @@ class CustomerController extends Controller
     public function create(Request $request)
     {
         $data['name']= $this->name;
-
+       
         return view($this->view.'.create',$data)->withController($this);
     }
 
@@ -67,7 +67,8 @@ class CustomerController extends Controller
         $customer->active     = $request->status;
         $customer->save();
         
-        return  redirect()->to($this->getRedirectLink())->with('success', "Khách hàng đã thêm thành công");
+       return  redirect()->to($this->getRedirectLink())->with('success', "Khách hàng đã thêm thành công");
+       
     }
 
     /**
@@ -84,12 +85,14 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit(Request $request, $id)
+    {   
+       
         $data['customer'] = Customer::find($id);
         $data['name']   = $this->name;
-        $data['customers'] = Customer::orderBy('id', 'asc')->paginate($this->paginNumber);
-        return view($this->view.".edit",$data)->withController($this);  
+        
+       // dd(url()->previous());
+        return view($this->view.".edit",$data);//->withController(url()->previous());  
         
     }
 
@@ -107,7 +110,7 @@ class CustomerController extends Controller
          $this->validate($request, [
              'first_name' => 'required',
              'last_name' => 'required',
-            'birthday' =>'required|date_format:d-m-Y|before:today',
+             'birthday' =>'required|date_format:d-m-Y|before:today',
              'email' => 'required|regex:/(.+)@(.+)\.(.+)/i|unique:customers,email,'.$id,
              'phone' =>'required|regex:/(0)[0-9]/|digits_between:10,15',
         ], [
@@ -134,6 +137,8 @@ class CustomerController extends Controller
         $customer->address    = $request->address;
         $customer->active     = $request->status;
         $customer->save();
+       // return redirect()->url()->previous();
+       
         return redirect()->to($this->getRedirectLink())->with('sucess','Lưu dữ liệu thành công!');
     }
 
@@ -148,5 +153,20 @@ class CustomerController extends Controller
         $customer = Customer::find($id);
         $customer ->delete();
         return  redirect()->to($this->getRedirectLink())->with('success', 'Customer Deleted Successfully');
+    }
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        $data['customers'] = Customer::query()->where('first_name', 'LIKE', "%{$search}%")
+        ->orWhere('last_name', 'LIKE', "%{$search}%")->orWhere('birthday', 'LIKE', "%{$search}%")
+        ->orWhere('gender', 'LIKE', "%{$search}%")->orWhere('email', 'LIKE', "%{$search}%")
+        ->orWhere('gender', 'address', "%{$search}%")->orWhere('gender', 'active', "%{$search}%")
+        ->paginate($this->limit);
+        $data['customers']->appends(['search' => $search]);
+        $data['counts'] =session('counts',$data['customers']->count());
+        $data['name']  = $this->name;
+        $data['link'] =url()->full();
+      //  dd($data['customers']->url(url()->full()));
+        return view($this->view .'.index',$data)->withController($this);
     }
 }
