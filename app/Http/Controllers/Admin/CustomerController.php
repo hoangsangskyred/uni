@@ -43,7 +43,7 @@ class CustomerController extends Controller
     public function create(Request $request)
     {
         $data['name']= $this->name;
-       
+        
         return view($this->view.'.create',$data)->withController($this);
     }
 
@@ -90,8 +90,6 @@ class CustomerController extends Controller
        
         $data['customer'] = Customer::find($id);
         $data['name']   = $this->name;
-        
-       // dd(url()->previous());
         return view($this->view.".edit",$data);//->withController(url()->previous());  
         
     }
@@ -156,17 +154,35 @@ class CustomerController extends Controller
     }
     public function search(Request $request)
     {
-        $search = $request->input('search');
-        $data['customers'] = Customer::query()->where('first_name', 'LIKE', "%{$search}%")
+        $search = $request->input('q');
+        $gender =$request->input('gender');
+      
+        if($gender==null)
+        {
+            $gender=[1,2];
+            $data['customers'] = Customer::query()->where('first_name', 'LIKE', "%{$search}%")
+            ->orWhere('last_name', 'LIKE', "%{$search}%")->orWhere('birthday', 'LIKE', "%{$search}%")
+            ->orWhereIn('gender', $gender)->orWhere('email', 'LIKE', "%{$search}%")
+            ->orWhere('phone', 'LIKE', "%{$search}%")->paginate($this->limit);
+            $data['customers']->appends(['q' => $search]);
+          
+        }
+       else
+       { 
+        
+        Customer::query()->where('first_name', 'LIKE', "%{$search}%")
         ->orWhere('last_name', 'LIKE', "%{$search}%")->orWhere('birthday', 'LIKE', "%{$search}%")
-        ->orWhere('gender', 'LIKE', "%{$search}%")->orWhere('email', 'LIKE', "%{$search}%")
-        ->orWhere('gender', 'address', "%{$search}%")->orWhere('gender', 'active', "%{$search}%")
-        ->paginate($this->limit);
-        $data['customers']->appends(['search' => $search]);
-        $data['counts'] =session('counts',$data['customers']->count());
-        $data['name']  = $this->name;
-        $data['link'] =url()->full();
-      //  dd($data['customers']->url(url()->full()));
-        return view($this->view .'.index',$data)->withController($this);
+        ->orWhere('email', 'LIKE', "%{$search}%")
+        ->orWhere('phone', 'LIKE', "%{$search}%")->paginate($this->limit);
+          $data['customers']->appends(['q' => $search]);
+       }
+     
+      
+      
+       $data['name']  = $this->name;
+       return view($this->view .'.search',$data)->withController($this);
+     
+       
+
     }
 }

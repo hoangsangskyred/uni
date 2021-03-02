@@ -42,8 +42,8 @@
                           <div class="mt-4">
                              <select class="form-select" name="gender" required aria-label="select example">
                                 <option value="">Chọn giới tính</option>
-                                <option value="nam" @if (old('gender')=='nam' ) selected="selected" @endif>nam</option>
-                                <option value="nữ" @if (old('gender')=='nữ' ) selected="selected" @endif>nữ</option>
+                                <option value="1" @if (old('gender')=='1' ) selected="selected" @endif>nam</option>
+                                <option value="0" @if (old('gender')=='0' ) selected="selected" @endif>nữ</option>
                               </select>
                                 <div class="invalid-feedback">vui lòng chọn giới tính</div>
                             </div>
@@ -92,7 +92,7 @@
           <div class="row">
              <div class="col-md-8 mx-auto text-end">
                <button type="submit" class="btn btn-theme px-5"> Lưu</button>
-                <a href="{{ $controller->getRedirectLink()}}" class="btn btn-secondary"> Thoát</a>
+                <a href="{{url()->previous()}}" class="btn btn-secondary"> Thoát</a>
              </div>
            </div>
        </div>

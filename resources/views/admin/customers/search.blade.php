@@ -10,20 +10,32 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-md-3">
-                    <span>Có {{$counts}} trong tổng số {{$customers->total()}} khách hàng đã tìm thấy</span>
+                    @if($customers->count()>0)
+                    <span>Có {{$customers->count()}}/{{$customers->total()}} khách hàng </span>
                     <span></span>
+                    @else
+                    <span>không tìm thấy </span>
+                    @endif
                 </div>
-                 <div class="col-md-6">
+                 <div class="col-md-7 d-flex ">
                     <form action="{{route($name.'.search')}}" method="get">
                        <div class="input-group">
-                         <input type="search" class="form-control rounded" placeholder="Tìm kiếm" aria-label="Search"
-                              aria-describedby="search-addon" name="search" />
-                          <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i></button>
+                        <div class="justify-content-start d-flex align-items-start mr-2">
+                            <select class="form-select" name="gender">
+                             <option value="">Chọn giới tính</option>
+                             <option value="1">Nam</option>
+                             <option value="0">Nữ</option>
+                            </select>
+                         </div>
+                         <input type="text" class="form-control" placeholder="Tìm kiếm theo tên , email hoặc số điện thoại" 
+                              name="q" size="120px" id="search" />
+                             
+                              <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i></button>
                        </div>
                     </form>
                  </div>
 
-                <div class="col-md-3 text-end">
+                <div class="col-md-2 text-end">
                     <a href="{{route($name.'.create')}}" class="btn btn-success btn-sm"><i class="fas fa-plus-circle"></i> Tạo mới</a>
                 </div>
             </div>
@@ -52,7 +64,7 @@
                         <td>{{$customer->first_name}}</td>
                         <td>{{$customer->last_name}}</td>
                         <td>{{$customer->birthday->format('d-m-Y')}}</td>
-                        <td>{{$customer->gender}}</td>
+                        <td>{{$customer->gender==1 ?"nam":"nữ"}}</td>
                         <td>{{$customer->email}}</td>
                         <td>{{$customer->phone}}</td>
                         <td>{{$customer->address}}</td>
@@ -103,6 +115,7 @@
                 </thead>
              </table>
         </div>
+        
        <div class="pagination justify-content-center">
           {{$customers->links()}}   
        </div>

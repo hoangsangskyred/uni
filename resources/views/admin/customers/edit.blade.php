@@ -44,8 +44,8 @@
                                   <div class="gender">
                                         <label for="gender">Giới Tính</label>
                                         <select class="form-select" required aria-label="select example" name="gender">
-                                        <option value="{{$customer->gender=='nam' ? 'nam' :'nữ'}}">{{$customer->gender=="nam" ? "nam" :"nữ"}}</option>
-                                        <option value="{{$customer->gender=='nữ' ? 'nam' :'nữ'}}">{{$customer->gender=="nữ" ? "nam" :"nữ"}}</option>
+                                        <option value="{{$customer->gender=='1' ? '1' :'0'}}">{{$customer->gender=="1" ? "nam" :"nữ"}}</option>
+                                        <option value="{{$customer->gender=='0' ? '1' :'0'}}">{{$customer->gender=="0" ? "nam" :"nữ"}}</option>
                                         </select>
                                    <div class="invalid-feedback">vui lòng chọn giới tính</div>
                                 </div>
