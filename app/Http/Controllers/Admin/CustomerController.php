@@ -157,29 +157,61 @@ class CustomerController extends Controller
         $search = $request->input('q');
         $gender =$request->input('gender');
       
-        if($gender==null)
-        {
-            $gender=[1,2];
-            $data['customers'] = Customer::query()->where('first_name', 'LIKE', "%{$search}%")
-            ->orWhere('last_name', 'LIKE', "%{$search}%")->orWhere('birthday', 'LIKE', "%{$search}%")
-            ->orWhereIn('gender', $gender)->orWhere('email', 'LIKE', "%{$search}%")
-            ->orWhere('phone', 'LIKE', "%{$search}%")->paginate($this->limit);
-            $data['customers']->appends(['q' => $search]);
-          
-        }
-       else
-       { 
-        
-        Customer::query()->where('first_name', 'LIKE', "%{$search}%")
-        ->orWhere('last_name', 'LIKE', "%{$search}%")->orWhere('birthday', 'LIKE', "%{$search}%")
-        ->orWhere('email', 'LIKE', "%{$search}%")
-        ->orWhere('phone', 'LIKE', "%{$search}%")->paginate($this->limit);
-          $data['customers']->appends(['q' => $search]);
-       }
+       
      
-      
-      
+      // set từng trường hợp
+      if($search=='')
+      {
+          if($gender==null)
+          {
+            $gender=[1,0];
+            return back();
+          }
+          elseif($gender=='1')
+          {
+            $data['customers'] = Customer::query()->where('gender',1)->paginate($this->limit);
+            $data['customers']->appends(['gender'=>'1','q' => $search]);
+          }
+          else
+          {
+            $data['customers'] = Customer::query()->where('gender',0)->paginate($this->limit);
+            $data['customers']->appends(['gender'=>'0','q' => $search]);
+          }
+      }
+      else
+      {
+          if($gender==null)
+          {
+            $gender=[1,0];
+            $data['customers']= Customer::query()->where('gender','=','0')->orwhere('gender','=','1')->where(function ($query) use ($search) {
+                $query->where('first_name', 'LIKE', "%{$search}%")->orwhere('last_name','LIKE',"%{$search}%")
+                      ->orWhere('email', 'LIKE', "%{$search}%")->orwhere('phone','LIKE',"%{$search}%");
+            })->paginate($this->limit);
+            $data['customers']->appends(['gender'=>'','q' => $search]);
+          }
+          elseif($gender=='1')
+          {
+            $data['customers']= Customer::query()->where('gender','=','1')->where(function ($query) use ($search) {
+                $query->where('first_name', 'LIKE', "%{$search}%")->orwhere('last_name','LIKE',"%{$search}%")
+                      ->orWhere('email', 'LIKE', "%{$search}%")->orwhere('phone','LIKE',"%{$search}%");
+            })->paginate($this->limit);
+            $data['customers']->appends(['gender'=>'1','q' => $search]);
+          }
+          else
+          {
+            $data['customers']= Customer::query()->where('gender','=','0')->where(function ($query) use ($search) {
+                $query->where('first_name', 'LIKE', "%{$search}%")->orwhere('last_name','LIKE',"%{$search}%")
+                      ->orWhere('email', 'LIKE', "%{$search}%")->orwhere('phone','LIKE',"%{$search}%");
+            })->paginate($this->limit);
+            $data['customers']->appends(['gender'=>'0','q' => $search]);
+             
+          }
+          
+      }
+       $data['counts'] =Customer::all()->count();
        $data['name']  = $this->name;
+       $data['gender'] =$request->input('gender');
+       $data['search']=  $request->input('q'); 
        return view($this->view .'.search',$data)->withController($this);
      
        

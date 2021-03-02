@@ -22,13 +22,14 @@
                        <div class="input-group">
                         <div class="justify-content-start d-flex align-items-start mr-2">
                             <select class="form-select" name="gender">
-                             <option value="">Chọn giới tính</option>
-                             <option value="1">Nam</option>
-                             <option value="0">Nữ</option>
+                               <option value="" @if($gender== '') ? selected : null @endif disabled>Chọn giới tính</option>
+                                <option value="1" @if($gender == '1') ? selected : null @endif>nam</option>
+                                <option value="0" @if($gender == '0') ? selected : null @endif>nữ</option>
+
                             </select>
                          </div>
                          <input type="text" class="form-control" placeholder="Tìm kiếm theo tên , email hoặc số điện thoại" 
-                              name="q" size="120px" id="search" />
+                              name="q" size="100px" id="search" value="{{$search}}" />
                              
                               <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i></button>
                        </div>

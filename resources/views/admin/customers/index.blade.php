@@ -18,12 +18,12 @@
                          <div class="justify-content-start d-flex align-items-start mr-2">
                             <select class="form-select" name="gender">
                              <option value="">Chọn giới tính</option>
-                             <option value="1">Nam</option>
-                             <option value="0">Nữ</option>
+                             <option value="1">nam</option>
+                             <option value="0">nữ</option>
                             </select>
                          </div>
                               <input type="text" class="form-control" placeholder="Tìm kiếm theo tên , email hoặc số điện thoại" 
-                                   name="q"  id="search" size="40px"/>
+                                   name="q"  id="search" size="40px" value="{{old('q')}}"/>
                                 <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i></button>
                        </div>
                     </form>
