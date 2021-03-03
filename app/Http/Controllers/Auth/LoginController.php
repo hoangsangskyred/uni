@@ -24,6 +24,7 @@ class LoginController extends Controller
     public function authenticated(Request $request, $user)
     {
         $user->last_login_at = Carbon::now()->toDateTimeString();
+        
         $user->save();
     }
 

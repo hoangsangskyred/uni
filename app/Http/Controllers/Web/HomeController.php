@@ -10,9 +10,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-       // $user= User::find(1)->update(['email'=>'hoangsangskyred@gmail.com','password'=>bcrypt(123456)]);
-        //dd($user);
-        $teamMembers = TeamMember::whereShow('Y')->get();
-        return view('web.welcome', compact('teamMembers'));
+       $teamMembers = TeamMember::whereShow('Y')->get();
+       
+       return view('web.welcome', compact('teamMembers'));
     }
 }

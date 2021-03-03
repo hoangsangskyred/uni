@@ -19,7 +19,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-floating mb-3">
-                               <input type="text" class="form-control text-capitalize" id="first_name" name="first_name" placeholder="First Name" value="{{old('first_name')}}" required >
+                                <input type="text" class="form-control text-capitalize" id="first_name" name="first_name" placeholder="First Name" value="{{old('first_name')}}" required >
                                 <label for="first_name" style="top:10px !important; padding:0 !important">Tên</label>
                                 <div class="invalid-feedback"><i class="fas fa-exclamation-circle"></i> Không được rỗng</div>
                             </div>
@@ -39,12 +39,12 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                          <div class="mt-4">
-                             <select class="form-select" name="gender" required aria-label="select example">
-                                <option value="">Chọn giới tính</option>
-                                <option value="1" @if (old('gender')=='1' ) selected="selected" @endif>nam</option>
-                                <option value="0" @if (old('gender')=='0' ) selected="selected" @endif>nữ</option>
-                              </select>
+                            <div class="mt-4">
+                                <select class="form-select" name="gender" required aria-label="select example">
+                                    <option value="">Chọn giới tính</option>
+                                    <option value="1" @if (old('gender')=='1' ) selected="selected" @endif>nam</option>
+                                    <option value="0" @if (old('gender')=='0' ) selected="selected" @endif>nữ</option>
+                                </select>
                                 <div class="invalid-feedback">vui lòng chọn giới tính</div>
                             </div>
                         </div>
@@ -62,23 +62,19 @@
                                 <input type="text" class="form-control" id="phone" name="phone" placeholder="Nhập email tại đây" value="{{old('phone')}}" required>
                                 <label for="phone"  style="top:10px !important; padding:0 !important" >Số điện thoại</label>
                                 <div class="invalid-feedback"><i class="fas fa-exclamation-circle">Vui lòng nhập số điện thoại</i></div>
-    
                             </div>
                         </div>
-
                         <div class="col mt-3">
                             <div class="form-group">
                                 <label for="floatingTextarea2">Địa chỉ</label>
-                                <textarea class="form-control" name="address" id="address" style="height: 50px">{{old('address')}}</textarea>
+                                <input type="text" class="form-control" id="address" name="address" value="{{old('address')}}"/>
                             </div>
                         </div>
-                       
-
-                        <div class="form-floating mb-3">
+                         <div class="form-floating mb-3">
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="checkbox" name="status" id="showCheck" value="1" checked>
                                 <label class="form-check-label" for="showCheck">Trạng thái</label>
-                            </div>
+                             </div>
                         </div>
 
                     </div>

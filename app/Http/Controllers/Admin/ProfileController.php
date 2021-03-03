@@ -12,8 +12,11 @@ class ProfileController extends Controller
         $this->validate($request, ['password' => 'required'], ['password.required' => 'Vui lòng nhập mật khẩu mới']);
 
         $needle = auth()->user();
+
         $needle->password = bcrypt($request->input('password'));
+
         $needle->save();
+        
         return redirect()->route('admin.dashboard')->withSuccess('Mật khẩu thay đổi thành công!');
     }
 }

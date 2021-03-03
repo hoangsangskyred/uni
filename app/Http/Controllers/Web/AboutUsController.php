@@ -12,7 +12,10 @@ class AboutUsController extends Controller
     public function index()
     {
         $needle = AboutUs::first();
+
         $teamMembers = TeamMember::whereShow('Y')->get();
+
         return view('web.about-us', compact('needle', 'teamMembers'));
+        
     }
 }
