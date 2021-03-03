@@ -20,7 +20,7 @@ class CustomerController extends Controller
 
     protected $view ='admin.customers';
 
-    protected $pageSize = 5;
+    protected $pageSize = 2;
    
     public function index(Request $request)
     { 
@@ -32,6 +32,10 @@ class CustomerController extends Controller
 
         $data['name']  = $this->name;
 
+        $data['gender'] = $request->input('gender');
+
+        $data['search'] = $request->session()->get('q');
+        
         return view($this->view .'.index',$data)->withController($this);
     
     }
@@ -230,7 +234,7 @@ class CustomerController extends Controller
 
        $data['search']=  $request->input('q'); 
 
-       return view($this->view .'.search',$data)->withController($this);
+       return view($this->view .'.index',$data)->withController($this);
      
     }
 }
