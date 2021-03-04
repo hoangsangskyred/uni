@@ -73,13 +73,13 @@
                         
                            <div class="col-md-12 mt-2">
                             <div class="form-check  form-check-inline">
-                                <input class="form-check-input" type="radio" name="active" id="flexRadioDefault1" value="1" checked>
+                                <input class="form-check-input" type="radio" name="active" id="flexRadioDefault1" value="1" @if(old('active')=='1') checked @endif>
                                 <label class="form-check-label" for="flexRadioDefault1">
                                  hoạt động
                                 </label>
                            </div>
                             <div class="form-check  form-check-inline">
-                                <input class="form-check-input" type="radio" name="active" id="flexRadioDefault1" value="">
+                                <input class="form-check-input" type="radio" name="active" id="flexRadioDefault1" value="" @if(old('active')=='') checked @endif>
                                 <label class="form-check-label" for="flexRadioDefault1">
                                  không hoạt động
                                 </label>
