@@ -12,12 +12,15 @@ class ArticleCategory extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'article_categories';
+
     protected $fillable = ['display_name'];
+
     protected $attributes = ['display_name' => null, 'slug' => null, 'show' => 'Y'];
 
     public function setDisplayNameAttribute($value)
     {
         $this->attributes['display_name'] = Str::title($value);
+        
         $this->attributes['slug'] = Str::slug($this->attributes['display_name']);
     }
 

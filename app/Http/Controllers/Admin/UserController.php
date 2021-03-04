@@ -23,8 +23,7 @@ class UserController extends Controller
     {
         $list = User::whereNotIn('name', ['super-admin'])->where( 'id' , '<>',auth()->id())->orderBy('name')->get();
 
-        return view($this->view . '.index', compact('list'))->withController($this);
-        
+        return view($this->view . '.index', compact('list'))->withController($this);     
     }
 
     public function create()
@@ -64,7 +63,6 @@ class UserController extends Controller
 
         if (!is_null($validatedData['password']))
             $user->password = bcrypt($validatedData['password']);
-
     }
 
     public function store(Request $request): RedirectResponse
@@ -75,17 +73,14 @@ class UserController extends Controller
 
         $needle = new User();
 
-        //$needle->confirm_code = Str::random(64);
         $this->fillDataToModel($data, $needle);
 
         if ($needle->save()) {
             $needle->roles()->sync($data['role']);
 
             return redirect()->to($this->getRedirectLink())->withSuccess('Lưu dữ liệu thành công!');
-
         } else {
             return redirect()->back()->withErrors(['Lỗi không xác định! Vui lòng liên lạc với Quản trị viên']);
-
         }
     }
 
@@ -100,7 +95,6 @@ class UserController extends Controller
 
         return view($this->view . '.edit', compact('needle','roles'))
             ->withController($this);
-
     }
 
     public function update(Request $request, $id): RedirectResponse
@@ -114,13 +108,10 @@ class UserController extends Controller
         $this->fillDataToModel($data, $needle);
 
         if ($needle->save()) {
-
             $needle->roles()->sync($data['role']);
 
             return redirect()->to($this->getRedirectLink())->withSuccess('Lưu dữ liệu thành công!');
-
         } else {
-            
             return redirect()->back()->withErrors(['Lỗi không xác định! Vui lòng liên lạc với Quản trị viên']);
         }
     }

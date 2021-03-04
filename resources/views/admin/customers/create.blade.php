@@ -70,13 +70,24 @@
                                 <input type="text" class="form-control" id="address" name="address" value="{{old('address')}}"/>
                             </div>
                         </div>
-                         <div class="form-floating mb-3">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="status" id="showCheck" value="1" checked>
-                                <label class="form-check-label" for="showCheck">Trạng thái</label>
-                             </div>
-                        </div>
-
+                        
+                           <div class="col-md-12 mt-2">
+                            <div class="form-check  form-check-inline">
+                                <input class="form-check-input" type="radio" name="active" id="flexRadioDefault1" value="1" checked>
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                 hoạt động
+                                </label>
+                           </div>
+                            <div class="form-check  form-check-inline">
+                                <input class="form-check-input" type="radio" name="active" id="flexRadioDefault1" value="">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                 không hoạt động
+                                </label>
+                            </div>
+                           </div>
+                          
+                         
+                    
                     </div>
                 </div>
 
@@ -88,7 +99,7 @@
           <div class="row">
              <div class="col-md-8 mx-auto text-end">
                <button type="submit" class="btn btn-theme px-5"> Lưu</button>
-                <a href="{{url()->previous()}}" class="btn btn-secondary"> Thoát</a>
+                <a href="{{ $controller->getRedirectLink() }}" class="btn btn-secondary"> Thoát</a>
              </div>
            </div>
        </div>

@@ -50,12 +50,14 @@ class AboutUsController extends Controller
 
     public function store( Request $request )
     {
-        
-        $request->validate(['title' => 'required', 'content' => 'required'],
-            [
-            'title.required' => 'Vui lòng nhập tiêu đề',
-            'content.required' => 'Vui lòng cung cấp nội dung chi tiết'
-            ]);
+        $request->validate([
+                'title' => 'required', 
+                'content' => 'required'
+            ],[
+                'title.required' => 'Vui lòng nhập tiêu đề',
+                'content.required' => 'Vui lòng cung cấp nội dung chi tiết'
+            ]
+        );
 
         $needle = new AboutUs();
 

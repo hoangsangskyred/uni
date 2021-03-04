@@ -21,10 +21,14 @@ class ArticleSourceLink extends Model
         if ($url)
         {
             $this->url = $url;
+
             $this->protocol = Str::startsWith($this->url,'https://') ? 'https://' : 'http://';
+
             $content_parts = explode('/', str_replace($this->protocol, '', $this->url));
+
             $this->website_address = Str::startsWith($content_parts[0],'www.')?$content_parts[0]:('www.'.$content_parts[0]);
         }
+        
         $this->article = $article ? $article : new Article;
     }
 

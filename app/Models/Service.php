@@ -30,6 +30,7 @@ class Service extends Model
     public function setTitleAttribute($value)
     {
         $this->attributes['title'] = Str::title($value);
+        
         $this->attributes['slug'] = Str::slug($this->attributes['title']);
     }
 }

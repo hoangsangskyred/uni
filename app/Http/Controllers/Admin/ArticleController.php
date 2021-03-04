@@ -25,17 +25,14 @@ class ArticleController extends Controller
             ->paginate(20);
 
         return $list;
-
     }
 
     public function index(Request $request)
     {
-       
         $this->setRedirectLink($request);
         
         return view($this->view . '.index', ['list' => $this->search($request)])
             ->withController($this);
-
     }
 
     public function create()
@@ -44,19 +41,15 @@ class ArticleController extends Controller
 
         return view($this->view . '.create', compact('needle'))
             ->withController($this);
-
     }
 
     public function showCrawlForm()
     {
-
         return view($this->view . '.crawl')->withController($this);
-
     }
 
     public function crawl(Request $request)
-    {
-        
+    {    
         $source = new ArticleSourceLink($request->input('sourceLink'));
 
         $source->article->article_category_id = $request->input('category');
@@ -77,23 +70,19 @@ class ArticleController extends Controller
     }
 
     public function validateData(Request $request)
-    {
-        
+    {      
         $request->validate([
-            
-            'title' => 'required',
-            'content' => 'required'
-        ],
-        [
-            'title.required' => 'Vui lòng cho biết Tên hiển thị',
-            'content.required' => 'Vui lòng cho biết Nội dung bài viết',
-
-        ]);
-
+                'title' => 'required',
+                'content' => 'required'
+            ],[
+                'title.required' => 'Vui lòng cho biết Tên hiển thị',
+                'content.required' => 'Vui lòng cho biết Nội dung bài viết',
+            ]   
+        );
     }
 
-    public function fillDataToModel(array $validatedData, Article $article) {
-       
+    public function fillDataToModel(array $validatedData, Article $article)
+    {
         $article->title     = $validatedData['title'];
 
         $article->article_category_id = intval($validatedData['category']);
@@ -125,10 +114,8 @@ class ArticleController extends Controller
 
     public function edit(Article $article)
     {
-
         return view($this->view . '.edit', ['needle' => $article])
             ->withController($this);
-
     }
 
     public function update(Request $request, Article $article)
@@ -140,16 +127,12 @@ class ArticleController extends Controller
         $article->save();
 
         return redirect()->to($this->getRedirectLink())->withSuccess('Lưu dữ liệu thành công!');
-
     }
 
     public function destroy(Article $article)
     {
-
         $article->delete();
 
         return redirect()->to( $this->getRedirectLink() )->withSuccess('Xóa dữ liệu thành công!');
-        
-
     }
 }

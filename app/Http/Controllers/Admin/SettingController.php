@@ -19,29 +19,23 @@ class SettingController extends Controller
 
     public function index()
     {
-
         $list = Setting::orderBy('name','asc')->get();
 
         return view($this->view . '.index', compact('list'))->withController($this);
-
     }
 
     public function edit($id)
-    {
-        
+    {     
         $needle = Setting::find($id);
 
         return view($this->view . '.edit', compact('needle'))->withController($this);
-
     }
 
     public function update(Request $request, $id)
     {
-
         $needle = Setting::find($id);
 
         if ($needle) {
-
             $needle->display_name = $request->input('display_name');
 
             $needle->setting_value = $request->input('setting_value');
@@ -49,11 +43,8 @@ class SettingController extends Controller
             $needle->save();
 
             return redirect()->to($this->getRedirectLink())->withSuccess('Lưu dữ liệu thành công!');
-
         } else {
-
-            return redirect()->back()->withErrors(['Không tìm thấy mẫu tin!']);
-            
+            return redirect()->back()->withErrors(['Không tìm thấy mẫu tin!']);         
         }
     }
 }

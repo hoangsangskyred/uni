@@ -4,7 +4,7 @@
 @section('page-content')
 <h1>@stack('page-title')</h1>
 
-<form id="createForm" action="{{ route($name.'.update', $customer->id) }}" method="post" class="needs-validation" novalidate>
+<form id="createForm" action="{{ route($name.'.update', $customer->id) }}" method="POST" class="needs-validation" novalidate>
         @csrf
         @method('PUT')
         <div class="card">
@@ -69,11 +69,19 @@
                                     <input type="text" class="form-control" id="address" name="address" value="{{$customer->address}}"/>
                                 </div>
                             </div>
-                              
-                            <div class="form-floating mb-3">
+                             
+                            <div class="col-md-12 mt-2">
+                                 <div class="form-check  form-check-inline">
+                                    <input class="form-check-input" type="radio" name="active" id="flexRadioDefault1" value="1" @if(old('active')=='1') checked @endif {{ ($customer->active=="1")? "checked" : "" }}>
+                                    <label class="form-check-label" for="flexRadioDefault1">
+                                        hoạt động
+                                    </label>
+                                </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" name="status" id="showCheck" value="1" {{ (old() ? old('active', false) : $customer->active ?? false) ? 'checked' : '' }} >
-                                    <label class="form-check-label" for="showCheck">Trạng thái</label>
+                                    <input class="form-check-input" type="radio" name="active" id="flexRadioDefault2" value="" @if(old('active')) checked @endif  {{ ($customer->active==null)? "checked" : "" }}  >
+                                    <label class="form-check-label" for="flexRadioDefault2">
+                                        không hoạt động
+                                    </label>
                                 </div>
                             </div>
                          </div>
@@ -87,7 +95,7 @@
                         <button type="submit" class="btn btn-theme px-5">
                             Lưu
                         </button>
-                        <a href="{{url()->previous()}}" class="btn btn-secondary">
+                        <a href="{{ $controller->getRedirectLink() }}" class="btn btn-secondary">
                             Thoát
                         </a>
                     </div>

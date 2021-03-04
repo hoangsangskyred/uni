@@ -14,6 +14,7 @@ class Article extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'articles';
+
     protected $fillable = [
         'article_category_id',
         'avatar_path',
@@ -40,6 +41,7 @@ class Article extends Model
     public function setTitleAttribute($value)
     {
         $this->attributes['title'] = Str::title($value);
+
         $this->attributes['slug'] = implode('/', array_filter([$this->category->slug, Str::slug($this->attributes['title'])]));
     }
 
@@ -48,6 +50,7 @@ class Article extends Model
         if ($this->attributes['avatar_path'] === null || $this->attributes['avatar_path'] == '' || !File::exists($this->attributes['avatar_path'])) {
             return '/public/img/article-default-avatar.png';
         }
+        
         return $this->attributes['avatar_path'];
     }
 
