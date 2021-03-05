@@ -15,27 +15,30 @@ class CustomerController extends Controller
 {
     use RedirectAfterSubmit;
   
-    protected $name ='admin.customers';
+    public $name ='admin.customers';
 
-    protected $view ='admin.customers';
-
-    protected $pageSize = 2;
+    public $view ='admin.customers';
    
     public function index(Request $request)
     { 
         $this->setRedirectLink($request);
 
-        $data['customers'] = Customer::orderBy('id', 'asc')->paginate($this->pageSize);
+        $list = Customer::query();
 
-        $data['counts'] =Customer::all()->count();
+        $list->when( request('q') !== null, function ($query) {
+            $query->where(function ($query){
+                $query->where('first_name', 'LIKE', '%' . request('q') . '%')
+                    ->orWhere('last_name', 'LIKE', '%' . request('q') . '%')
+                    ->orWhere('email', 'LIKE', '%' . request('q') . '%')
+                    ->orwhere('phone', 'LIKE', '%' . request('q') . '%');
+            });            
+        })->when( request('gender') !== null, function ($query) {
+            $query->where('gender', request('gender'));
+        });
 
-        $data['name']  = $this->name;
+        $list = $list->latest()->paginate( request('pageSize', 2) )->withQueryString();
 
-        $data['gender'] = $request->input('gender');
-
-        $data['search'] = $request->session()->get('q');
-        
-        return view($this->view .'.index',$data)->withController($this);
+        return view($this->view .'.index', compact('list'))->withController($this);
     }
 
     
@@ -50,7 +53,7 @@ class CustomerController extends Controller
     public function store(CustomerRequest $request)
     {  
         $customer = new Customer(request()->all());
-      
+        
         $customer->save();
 
         return  redirect()->to($this->getRedirectLink())->with('success', "Khách hàng đã thêm thành công");   
@@ -67,7 +70,7 @@ class CustomerController extends Controller
     }
 
 
-    public function update(CustomerRequest $request,Customer $customer)
+    public function update(CustomerRequest $request, Customer $customer)
     {
         $customer->update($request->all());
         
@@ -82,94 +85,5 @@ class CustomerController extends Controller
         $customer ->delete();
 
         return  redirect()->to($this->getRedirectLink())->with('success', 'Customer Deleted Successfully');
-    }
-
-    public function search(Request $request)
-    {     
-        $search = $request->input('q');
-
-        $gender =$request->input('gender');
-        
-        if ( $search=='' ) {
-
-            if ( $gender==null ) {
-                
-                $data['customers'] = Customer::query()->where(function ($query) use ($search) {
-                    
-                    $query->where('first_name', 'LIKE', "%{$search}%")
-                        ->orwhere('last_name','LIKE',"%{$search}%")
-                        ->orWhere('email', 'LIKE', "%{$search}%")
-                        ->orwhere('phone','LIKE',"%{$search}%");
-
-                })->paginate($this->pageSize);
-
-              $data['customers']->appends(['q' => $search]);
-
-            } elseif ( $gender == '1' ) {
-
-                $data['customers'] = Customer::query()->where('gender',1)->paginate($this->pageSize);
-
-                $data['customers']->appends(['gender'=>'1','q' => $search]);
-
-            } else {
-
-                $data['customers'] = Customer::query()->where('gender',0)->paginate($this->pageSize);
-
-                $data['customers']->appends(['gender'=>'0','q' => $search]);
-
-            }
-
-        } else {
-            
-            if( $gender == null ) {
-
-                $data['customers'] = Customer::query()->where(function ($query) use ($search) {
-
-                    $query->where( 'first_name', 'LIKE', "%{$search}%" )
-                        ->orwhere( 'last_name', 'LIKE', "%{$search}%" )
-                        ->orWhere( 'email', 'LIKE', "%{$search}%" )
-                        ->orwhere( 'phone', 'LIKE', "%{$search}%" );
-
-                })->paginate( $this->pageSize );
-                
-                $data['customers']->appends( ['q' => $search] );
-
-            } elseif ( $gender == '1' ) {
-
-                $data['customers']= Customer::query()->where('gender', '=', '1')->where( function ( $query ) use ( $search ) {
-
-                    $query->where('first_name', 'LIKE', "%{$search}%")
-                        ->orwhere('last_name','LIKE',"%{$search}%")
-                        ->orWhere('email', 'LIKE', "%{$search}%")
-                        ->orwhere('phone','LIKE',"%{$search}%");
-                
-                })->paginate( $this->pageSize );
-
-                $data['customers']->appends( ['gender'=>'1', 'q' => $search] );
-
-            } else {
-              
-                $data['customers']= Customer::query()->where('gender', '=', '0')->where( function ( $query ) use ( $search ) {
-                    
-                    $query->where('first_name', 'LIKE', "%{$search}%")
-                        ->orwhere('last_name', 'LIKE', "%{$search}%")
-                        ->orWhere('email', 'LIKE', "%{$search}%")
-                        ->orwhere('phone', 'LIKE', "%{$search}%");
-                    
-                })->paginate($this->pageSize);
-                
-                $data['customers']->appends( ['gender'=>'0','q' => $search] ); 
-            }      
-      }
-
-       $data['counts'] =Customer::all()->count();
-
-       $data['name']  = $this->name;
-
-       $data['gender'] =$request->input('gender');
-
-       $data['search']=  $request->input('q'); 
-
-       return view($this->view .'.index',$data)->withController($this);     
-    }
+    }  
 }

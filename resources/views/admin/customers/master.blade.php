@@ -14,8 +14,8 @@
             <th width="70px">Action</th>     
         </tr>
         <tbody>
-        @if($customers->isNotEmpty())    
-        @foreach($customers as $customer)
+        @if($list->count() > 0)    
+        @foreach($list as $customer)
             <tr>
                 <td>{{$customer->id}}</td>
                 <td>{{$customer->first_name}}</td>
@@ -26,14 +26,14 @@
                 <td>{{$customer->phone}}</td>
                 <td>{{$customer->address}}</td>
                 <td>{{$customer->active== 1 ?"active" :"disable" }}</td>
-                <td><a href="{{ route($name.'.edit', $customer->id) }}" title="edit"><i class="fas fa-edit  fa-sm"></i></a>
+                <td><a href="{{ route($controller->name.'.edit', $customer->id) }}" title="edit"><i class="fas fa-edit  fa-sm"></i></a>
                        <!-- Button trigger modal 5-->
                      <a  href ="#" data-bs-toggle="modal" data-bs-target="#customersModal{{$customer->id}}"  title="delete" class="text-danger fa-sm px-2"> <i class="fas fa-times-circle"></i></a>
                       <!--Modal--> 
                     <div class="modal fade" id="customersModal{{$customer->id}}" tabindex="-1" aria-labelledby="customersModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                              <form action="{{ route($name.'.destroy', $customer->id) }}" method="post">
+                              <form action="{{ route($controller->name.'.destroy', $customer->id) }}" method="post">
                                  @csrf
                                      @method('DELETE')
                                     <div class="modal-header">
@@ -67,5 +67,5 @@
      </table>
 </div>
 <div class="pagination justify-content-center">
-    {{$customers->links()}}   
+    {{$list->links()}}   
  </div>

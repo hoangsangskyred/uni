@@ -13,13 +13,30 @@
     <div class="card">
         <div class="card-header">
             <div class="row">
-                <div class="col-md-6">
-                    <span>Tổng số: {{$list->count()}} mẫu tin</span>
-                </div>
-                <div class="col-md-6 text-end">
-                    <a href="{{route($controller->name . '.create')}}" class="btn btn-success btn-sm"><i class="fas fa-plus-circle"></i> Tạo mới</a>
-                </div>
-            </div>
+                <div class="col-md-3">
+                   <span>Tổng số: {{$list->total()}} mẫu tin</span>
+               </div>
+                <div class="col-md-9">
+                    <form action="{{route($controller->name.'.index')}}" method="get">
+                       <div class="input-group  d-flex justify-content-end align-items-end">
+                           <div class="justify-content-start d-flex align-items-start mr-2">
+                               <select class="form-select" name="display_name">
+                                   <option value="">Chọn Chủ đề</option>
+                                @foreach ($list as $item)
+                                    <option value="{{$item->category->display_name}}">{{ $item->category->display_name }}</option> 
+                                @endforeach
+                                </select>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Tìm kiếm theo tiêu đề hoặc chủ đề" 
+                                  name="q"  id="search" size="40px" value="{{ request('q') }}"/>
+                             <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                             <a href="{{route($controller->name.'.index')}}" class="btn btn-outline-primary">Tất cả</a>
+                             <a href="{{route($controller->name.'.create')}}" class="btn btn-success "><i class="fas fa-plus-circle"></i> Tạo mới</a>
+                       </div>
+                   </form>
+                 </div>
+           </div>
+           
         </div>
         <div class="card-body">
             <table class="table table-striped table-hover">
