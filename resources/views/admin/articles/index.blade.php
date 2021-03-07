@@ -22,8 +22,8 @@
                            <div class="justify-content-start d-flex align-items-start mr-2">
                                <select class="form-select" name="display_name">
                                    <option value="">Chọn Chủ đề</option>
-                                @foreach ($list as $item)
-                                    <option value="{{$item->category->display_name}}">{{ $item->category->display_name }}</option> 
+                                @foreach ($articleLists as $articleList)
+                                    <option value="{{$articleList->id}}" @if( request('display_name') == $articleList->id ) ? selected @endif>{{ $articleList->display_name }}</option> 
                                 @endforeach
                                 </select>
                             </div>
@@ -51,14 +51,15 @@
                 </tr>
                 <tbody>
                 @forelse($list as $item)
+                
                     <tr>
                         <td class="text-right">{{$item->id}}</td>
                         <td>
-                            <a href="{{route($controller->name . '.edit', [$item])}}">{{$item->title}}</a>
+                            <a href="{{route($controller->name . '.edit',$item->id)}}">{{$item->title}}</a>
                         </td>
-                        <td>{{$item->category->display_name}}</td>
+                        <td>{{$item->display_name}}</td>
                         <td>{{$item->show=='Y'?'Hiển thị':'Ẩn'}}</td>
-                        <td>{{$item->created_at->format('d-m-Y H:i')}}</td>
+                        <td>{{$item->display_name}}</td>
                         <td class="text-end">
                             <a href="#" data-bs-toggle="modal" data-bs-target="#deleteRow{{$item->id}}Modal" class="text-danger">
                                 <i class="fas fa-times-circle"></i>
@@ -80,5 +81,7 @@
             </table>
         </div>
     </div>
-
+    <div class="pagination justify-content-center">
+        {{$list->links()}}   
+     </div>
 @stop
