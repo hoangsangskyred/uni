@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Support\Str;
 class ArticleRequest extends FormRequest
 {
     /**
@@ -35,5 +35,13 @@ class ArticleRequest extends FormRequest
             'title.required' => 'Vui lòng cho biết Tên hiển thị',
             'content.required' => 'Vui lòng cho biết Nội dung bài viết',
         ];
+    }
+
+    public function prepareForValidation(): void
+    {
+        $this->merge([
+            'show' => $this->has('show') ? 'Y' : 'N',
+            'title' => Str::title($this->title)
+        ]);
     }
 }

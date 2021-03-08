@@ -33,15 +33,16 @@ class ArticleController extends Controller
 
     public function index(Request $request)
     {
-        $articleLists = DB::table('article_categories')->get();
+        $articleLists = ArticleCategory::all();
 
         $this->setRedirectLink($request);
        
         $search = $request->get('q');
-       
-        $list =Article::join('article_categories', 'articles.article_category_id', '=', 'article_categories.id')
-         ->select('articles.*', 'article_categories.display_name');
         
+        $list = Article::with('category')
+        ->Join('article_categories', 'articles.article_category_id', '=', 'article_categories.id')
+        ->select('articles.*','article_categories.display_name'); 
+    
         $list->when( request('q') !== null, function ($query) {
             $query->where(function ($query){
                 $query->where('title', 'LIKE', '%' . request('q') . '%')
@@ -63,7 +64,6 @@ class ArticleController extends Controller
 
         return view($this->view . '.create', compact('needle'))
             ->withController($this);
-
     }
 
     public function showCrawlForm()
@@ -75,8 +75,7 @@ class ArticleController extends Controller
 
     public function crawl(Request $request)
     {
-        
-        $source = new ArticleSourceLink($request->input('sourceLink'));
+         $source = new ArticleSourceLink($request->input('sourceLink'));
 
         $source->article->article_category_id = $request->input('category');
 
@@ -95,79 +94,16 @@ class ArticleController extends Controller
         }
     }
 
-    public function validateData(Request $request)
-    {
-        
-        $request->validate([
-            
-            'title' => 'required',
-            'content' => 'required'
-        ],
-        [
-            'title.required' => 'Vui lòng cho biết Tên hiển thị',
-            'content.required' => 'Vui lòng cho biết Nội dung bài viết',
-
-        ]);
-
-    }
-
-    public function fillDataToModel(array $validatedData, Article $article) {
-       
-       /* $article->title     = $validatedData['title'];
-
-        $article->article_category_id = intval($validatedData['category']);
-
-        $article->avatar_path = $validatedData['avatarPath'];
-
-        $article->show      = $validatedData['show'] ? 'Y' : 'N';
-
-        $article->content   = $validatedData['content'];*/
-
-    }
-
     public function store(ArticleRequest $request)
     {
-        /*$validated = $request->validate([
-            'title' => 'required',
-            'content' => 'required',
-        ]);*/
+        $article = new Article( $request->all() );
         
-        $article = new Article(request()->all());
-      
-       /* $article = new Article();
-
-        $article ->title = $request->title;
-
-        $article->article_category_id = $request->category;
-
-        $article->avatar_path = $request->avatarPath;
-
-        $article->show  = $request->show ?'Y':'N';
-
-        $article->content = $request->content;
-        */
+       // dd($article);
         $article->save();
-        
-        return redirect()->to( $this->getRedirectLink() )->withSuccess('Lưu dữ liệu thành công!');
-    
+       
+        return redirect()->to( $this->getRedirectLink() )->withSuccess('Lưu dữ liệu thành công!');  
     }
-    /*public function store(Request $request)
-    {
-        $this->validateData($request);
-
-        $needle = $this->fillDataToModel($request, new Article);
-
-        $needle->save();
-
-        if ($request->filled('saveAndCreate')) {
-
-            return redirect()->route($this->name . '.create');
-
-        }
-
-        return redirect()->to( $this->getRedirectLink() )->withSuccess('Lưu dữ liệu thành công!');
-    }
-*/
+  
     public function edit(Article $article)
     {
         return view($this->view . '.edit', ['needle' => $article])
@@ -177,12 +113,6 @@ class ArticleController extends Controller
     public function update(ArticleRequest $request, Article $article)
     {
         $article->update($request->all());
-       
-       /* $this->validateData($request);
-
-        $this->fillDataToModel($request->except(['_token', '_method']), $article);
-
-        $article->save();*/
 
         return redirect()->to($this->getRedirectLink())->withSuccess('Lưu dữ liệu thành công!');
 
@@ -190,11 +120,8 @@ class ArticleController extends Controller
 
     public function destroy(Article $article)
     {
-
         $article->delete();
 
         return redirect()->to( $this->getRedirectLink() )->withSuccess('Xóa dữ liệu thành công!');
-        
-
     }
 }

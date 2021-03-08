@@ -16,20 +16,21 @@ class Article extends Model
     protected $table = 'articles';
 
     protected $fillable = [
+        'id',
         'article_category_id',
         'avatar_path',
         'title',
-        'description',
+        'avatar',
         'content',
-        'show'
+        'show',
+        'article_source_link',
     ];
     protected $attributes = [
-        'article_category_id' => 0,
+        'article_category_id' => 1,
         'avatar_path' => null,
         'title' => null,
         'description' => null,
         'content' => null,
-        'show' => 'Y'
     ];
 
     public function category(): BelongsTo
@@ -38,12 +39,14 @@ class Article extends Model
             ->withDefault(['display_name' => '-', 'slug' => null]);
     }
 
+    
     public function setTitleAttribute($value)
     {
         $this->attributes['title'] = Str::title($value);
 
         $this->attributes['slug'] = implode('/', array_filter([$this->category->slug, Str::slug($this->attributes['title'])]));
     }
+    
 
     public function getAvatarAttribute(): string
     {
@@ -53,7 +56,7 @@ class Article extends Model
         
         return $this->attributes['avatar_path'];
     }
-
+    
     public function crawlFrom($url)
     {
         $this->attributes['article_source_link'] = $url;

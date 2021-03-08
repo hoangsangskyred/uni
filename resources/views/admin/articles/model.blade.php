@@ -19,6 +19,7 @@
                         @endforeach
                     </select>
                     <label for="category">Chủ đề</label>
+                    <div class="invalid-feedback"><i class="fas fa-exclamation-circle">Vui lòng nhập số điện thoại</i></div>
                 </div>
             </div>
         </div>
@@ -29,12 +30,12 @@
                     <button type="button" id="lfm" data-input="avatarPath" class="btn btn-outline-secondary">
                         <i class="fas fa-photo"></i> Chọn hình
                     </button>
-                    <input id="avatarPath" class="form-control" type="text" name="avatar_path" value="{{old('avatarPath', $needle->avatar_path)}}" placeholder="Chọn hình đại diện cho bài viết">
+                    <input id="avatarPath" class="form-control" type="text" name="avatarPath" value="{{old('avatarPath', $needle->avatar_path)}}" placeholder="Chọn hình đại diện cho bài viết">
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox"  name="show" id="showCheck" {{old('show', $needle->show)=='Y'?'checked':''}}>
+                    <input class="form-check-input" type="checkbox" name="show" id="showCheck" {{old('show')||$needle->show=='Y'?'checked':''}}>
                     <label class="form-check-label" for="showCheck">
                         Hiển thị
                     </label>
