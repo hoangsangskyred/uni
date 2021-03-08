@@ -25,7 +25,7 @@ class ArticleController extends Controller
     {
         $list = Article::with('category')
             ->orderBy('created_at','desc')
-            ->paginate(20);
+            ->paginate(5);
 
         return $list;
 
@@ -98,7 +98,6 @@ class ArticleController extends Controller
     {
         $article = new Article( $request->all() );
         
-       // dd($article);
         $article->save();
        
         return redirect()->to( $this->getRedirectLink() )->withSuccess('Lưu dữ liệu thành công!');  

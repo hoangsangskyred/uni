@@ -12,14 +12,14 @@
 
             <div class="col-md-4">
                 <div class="form-floating">
-                    <select class="form-select" id="category" name="article_category_id">
-                        <option value="0">- chọn -</option>
+                    <select class="form-select" id="category" name="article_category_id"  required>
+                        <option value="">Chọn chủ đề</option>
                         @foreach(\App\Models\ArticleCategory::orderBy('display_name')->get() as $articleCategory)
                             <option value="{{$articleCategory->id}}" {{old('category', $needle->article_category_id)==$articleCategory->id?'selected':''}}>{{$articleCategory->display_name}}</option>
                         @endforeach
                     </select>
                     <label for="category">Chủ đề</label>
-                    <div class="invalid-feedback"><i class="fas fa-exclamation-circle">Vui lòng nhập số điện thoại</i></div>
+                    <div class="invalid-feedback"><i class="fas fa-exclamation-circle">Vui lòng chọn chủ đề</i></div>
                 </div>
             </div>
         </div>
