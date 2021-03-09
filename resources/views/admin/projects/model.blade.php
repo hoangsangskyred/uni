@@ -9,11 +9,11 @@
 
         <div class="row mb-3">
             <div class="col-md-8">
-                <div class="form-floating mb-3">
-                    <select class="form-select" id="category" name="project_category_id">
-                        <option value="">- chọn -</option>
+                <div class="form-floating">
+                    <select class="form-select" id="category" name="project_category_id"  required>
+                        <option value="">Chọn chủ đề</option>
                         @foreach(\App\Models\ProjectCategory::orderBy('display_name')->get() as $projectCategory)
-                            <option value="{{$projectCategory->id}}" {{old('category', $needle->project_category_id)==$projectCategory->id?'selected':''}}>{{$projectCategory->display_name}}</option>
+                            <option value="{{$projectCategory->id}}" {{old('project_category_id', $needle->project_category_id)==$projectCategory->id?'selected':''}}>{{$projectCategory->display_name}}</option>
                         @endforeach
                     </select>
                     <label for="category">Chủ đề</label>

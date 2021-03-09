@@ -49,7 +49,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6">
+                        <td colspan="7">
                             <div class="alert alert-danger mb-0">
                                 <i class="fas fa-exclamation-circle"></i> Không có mẫu tin nào
                             </div>

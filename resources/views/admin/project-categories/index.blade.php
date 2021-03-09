@@ -33,7 +33,7 @@
                         <td>
                             <a href="{{route($controller->name . '.edit', [$item])}}">{{$item->display_name}}</a>
                         </td>
-                        <td>{{$item->articles_count}}</td>
+                        <td>{{$item->projects_count}}</td>
                         <td class="text-end">
                             <a href="#" data-bs-toggle="modal" data-bs-target="#deleteRow{{$item->id}}Modal" class="text-danger">
                                 <i class="fas fa-times-circle"></i>

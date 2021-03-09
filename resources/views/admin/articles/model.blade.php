@@ -15,7 +15,7 @@
                     <select class="form-select" id="category" name="article_category_id"  required>
                         <option value="">Chọn chủ đề</option>
                         @foreach(\App\Models\ArticleCategory::orderBy('display_name')->get() as $articleCategory)
-                            <option value="{{$articleCategory->id}}" {{old('category', $needle->article_category_id)==$articleCategory->id?'selected':''}}>{{$articleCategory->display_name}}</option>
+                            <option value="{{$articleCategory->id}}" {{old('article_category_id', $needle->article_category_id)==$articleCategory->id?'selected':''}}>{{$articleCategory->display_name}}</option>
                         @endforeach
                     </select>
                     <label for="category">Chủ đề</label>
