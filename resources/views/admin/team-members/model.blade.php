@@ -3,9 +3,9 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control text-capitalize" id="fullName" name="fullName" placeholder="Tên hiển thị" value="{{old('fullName', $needle->full_name)}}" required
+                    <input type="text" class="form-control text-capitalize" id="full_name" name="full_name" placeholder="Tên hiển thị" value="{{old('full_name', $needle->full_name)}}" required
                            autofocus>
-                    <label for="fullName">Tên hiển thị</label>
+                    <label for="full_name">Tên hiển thị</label>
                     <div class="invalid-feedback"><i class="fas fa-exclamation-circle"></i> Không được rỗng</div>
                 </div>
             </div>

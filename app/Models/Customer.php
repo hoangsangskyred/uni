@@ -38,10 +38,10 @@ class Customer extends Model
     {
         return Carbon::parse($value)->format('d-m-Y');
     }
+    
     public function setBirthdayAttribute($value)
     {
-        $this->attributes['birthday']  = Carbon::parse($value)->format('Y-m-d H:i:s');
-          
+        $this->attributes['birthday']  = Carbon::parse($value)->format('Y-m-d H:i:s');      
     }
 
 

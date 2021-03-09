@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\RedirectAfterSubmit;
 use App\Models\ProjectCategory;
 use Illuminate\Http\Request;
+use App\Http\Requests\ProjectCategoryRequest;
 
 class ProjectCategoryController extends Controller
 {
@@ -17,7 +18,7 @@ class ProjectCategoryController extends Controller
 
 
     public function search(Request $request)
-    { 
+    {
         $list = ProjectCategory::withCount('projects')
             ->orderBy('display_name','asc')
             ->paginate(20);
@@ -26,7 +27,7 @@ class ProjectCategoryController extends Controller
     }
 
     public function index(Request $request)
-    {
+    { 
         $this->setRedirectLink($request);
 
         return view($this->view . '.index', ['list' => $this->search($request)])
@@ -35,28 +36,15 @@ class ProjectCategoryController extends Controller
 
     public function create()
     {
+
         return view($this->view . '.create')->withController($this);
+
     }
-
-    public function validateData(Request $request)
+    public function store(ProjectCategoryRequest $request)
     {
-        $request->validate(
-            ['displayName' => 'required'],
-            ['displayName.required' => 'Vui lòng cho biết Tên hiển thị']
-        );
-    }
+        $ProjectCategory = new ProjectCategory($request->all());
 
-    public function store(Request $request)
-    {
-        $this->validateData($request);
-
-        $needle = ProjectCategory::create(['display_name' => $request->input('displayName')]);
-
-        if ($request->filled('createAfterStored')) {
-
-            return redirect()->route($this->name . '.create');
-
-        }
+        $ProjectCategory->save();
 
         return redirect()->to( $this->getRedirectLink() )->withSuccess('Lưu dữ liệu thành công!');
     }
@@ -67,21 +55,20 @@ class ProjectCategoryController extends Controller
             ->withController($this);
     }
 
-    public function update(Request $request, ProjectCategory $ProjectCategory)
+    public function update(ProjectCategoryRequest $request, ProjectCategory $ProjectCategory)
     {
-        $this->validateData($request);
-
-        $ProjectCategory->display_name = $request->input('displayName');
+        $ProjectCategory->update($request->all());
 
         $ProjectCategory->save();
 
         return redirect()->to($this->getRedirectLink())->withSuccess('Lưu dữ liệu thành công!');
+        
     }
 
     public function destroy(ProjectCategory $ProjectCategory)
-    {  
-        $ProjectCategory->articles()->delete();
-
+    {
+        $ProjectCategory->projects()->delete();
+        
         $ProjectCategory->delete();
 
         return redirect()->to( $this->getRedirectLink() )->withSuccess('Xóa dữ liệu thành công!');

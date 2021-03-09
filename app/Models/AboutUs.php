@@ -12,7 +12,8 @@ class AboutUs extends Model
 
     protected $table = 'about-us';
 
-    protected $fillable = ['title', 'content'];
+    protected $fillable = ['id','title', 'content'];
+    
     protected $attributes = ['title' => null, 'content' => null];
 
     public function setTitleAttribute($value)

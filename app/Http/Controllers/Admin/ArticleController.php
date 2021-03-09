@@ -22,23 +22,9 @@ class ArticleController extends Controller
     public $view = 'admin.articles';
 
     public function search(Request $request)
-    {
-        $list = Article::with('category')
-            ->orderBy('created_at','desc')
-            ->paginate(5);
-
-        return $list;
-
-    }
-
-    public function index(Request $request)
-    {
-        $articleLists = ArticleCategory::all();
-
-        $this->setRedirectLink($request);
-       
+    {      
         $search = $request->get('q');
-        
+
         $list = Article::with('category')
         ->Join('article_categories', 'articles.article_category_id', '=', 'article_categories.id')
         ->select('articles.*','article_categories.display_name'); 
@@ -52,10 +38,19 @@ class ArticleController extends Controller
              $query->where('article_category_id', request('display_name'));
          });
 
-        $list = $list->latest()->paginate(5)->withQueryString() ;     
-      
-        return view($this->view .'.index', compact('list','articleLists'))->withController($this);
-     
+        $list = $list->latest()->paginate(5)->withQueryString() ;   
+
+        return $list;
+    }
+
+    public function index(Request $request)
+    {
+        $articleLists = ArticleCategory::all();
+        
+        $this->setRedirectLink($request);
+       
+        return view($this->view . '.index', ['list' => $this->search($request),'articleLists'=> $articleLists])
+        ->withController($this); 
     }
 
     public function create()

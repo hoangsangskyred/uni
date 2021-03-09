@@ -10,16 +10,16 @@
         <div class="row mb-3">
             <div class="col-md-8">
                 <div class="input-group">
-                    <button type="button" id="lfm" data-input="avatarPath" class="btn btn-outline-secondary">
+                    <button type="button" id="lfm" data-input="avatar_path" class="btn btn-outline-secondary">
                         <i class="fas fa-photo"></i> Chọn hình
                     </button>
-                    <input id="avatarPath" class="form-control" type="text" name="avatarPath" value="{{old('avatarPath', $needle->avatar_path)}}" placeholder="Chọn hình đại diện cho bài viết">
+                    <input id="avatar_path" class="form-control" type="text" name="avatar_path" value="{{old('avatar_path', $needle->avatar_path)}}" placeholder="Chọn hình đại diện cho bài viết">
                 </div>
 
             </div>
             <div class="col-md-4">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" name="show" id="showCheck" {{old('show', $needle->show)=='Y'?'checked':''}}>
+                    <input class="form-check-input" type="checkbox" name="show" id="showCheck"  {{old('show')||$needle->show=='Y'?'checked':''}}>
                     <label class="form-check-label" for="showCheck">
                         Hiển thị
                     </label>

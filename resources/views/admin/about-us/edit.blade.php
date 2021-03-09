@@ -6,7 +6,7 @@
 
     <h1>@stack('page-title')</h1>
 
-    <form id="aboutUsForm" action="{{route($controller->name . '.update', [$needle])}}" method="post" class="needs-validation" novalidate>
+    <form id="aboutUsForm" action="{{route($controller->name . '.update', $needle->id)}}" method="post" class="needs-validation" novalidate>
         @csrf
         @method('PUT')
         <div class="card">

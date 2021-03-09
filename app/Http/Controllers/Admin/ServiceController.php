@@ -7,7 +7,7 @@ use App\Http\Controllers\Traits\RedirectAfterSubmit;
 use App\Models\Service;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-
+use App\Http\Requests\ServiceRequest;
 class ServiceController extends Controller
 {
     use RedirectAfterSubmit;
@@ -30,6 +30,7 @@ class ServiceController extends Controller
 
         return view($this->view . '.index', ['list' => $this->search($request)])
             ->withController($this);
+
     }
 
     public function create()
@@ -40,58 +41,25 @@ class ServiceController extends Controller
             ->withController($this);
     }
 
-    public function validateData(Request $request)
+    public function store(ServiceRequest $request)
     {
-        $request->validate([
-                'title' => 'required',
-                'content' => 'required'
-            ],[
-                'title.required' => 'Vui lòng cho biết Tiêu đề',
-                'content.required' => 'Vui lòng cho biết Nội dung chi tiết',
-            ]
-        );
-    }
-
-    public function fillDataToModel(array $validatedData, Service $service)
-    {
-        $service->title = $validatedData['title'];
-
-        $service->avatar_path = $validatedData['avatarPath'];
-
-        $service->show = $validatedData['show'] ? 'Y' : 'N';
-
-        $service->content = $validatedData['content'];
-    }
-
-    public function store(Request $request): RedirectResponse
-    {
-        $this->validateData($request);
-
-        $needle = new Service;
-
-        $this->fillDataToModel($request->except('_token'), $needle);
-   
-        $needle->save();
-
-        if ($request->filled('saveAndCreate')) {
-            return redirect()->route($this->name . '.create');
-        }
+        $service = new Service( $request->all() );
         
-        return redirect()->to($this->getRedirectLink())->withSuccess('Lưu dữ liệu thành công!');
+        $service->save();
+       
+        return redirect()->to( $this->getRedirectLink() )->withSuccess('Lưu dữ liệu thành công!'); 
     }
 
     public function edit(Service $service)
     {
         return view($this->view . '.edit', ['needle' => $service])
-            ->withController($this);
+            ->withController($this);         
     }
 
-    public function update(Request $request, Service $service)
+    public function update(ServiceRequest $request, Service $service)
     {
-        $this->validateData($request);
-
-        $this->fillDataToModel($request->except(['_token', '_method']), $service);
-
+        $service->update($request->all());
+        
         $service->save();
 
         return redirect()->to($this->getRedirectLink())->withSuccess('Lưu dữ liệu thành công!');
@@ -101,6 +69,6 @@ class ServiceController extends Controller
     {
         $service->delete();
 
-        return redirect()->to($this->getRedirectLink())->withSuccess('Xóa dữ liệu thành công!');       
+        return redirect()->to($this->getRedirectLink())->withSuccess('Xóa dữ liệu thành công!');
     }
 }

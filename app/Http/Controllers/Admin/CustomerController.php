@@ -69,7 +69,6 @@ class CustomerController extends Controller
         return view($this->view.".edit",$data)->withController($this);
     }
 
-
     public function update(CustomerRequest $request, Customer $customer)
     {
         $customer->update($request->all());
@@ -77,7 +76,6 @@ class CustomerController extends Controller
         return redirect()->to($this->getRedirectLink())->with('success','Lưu dữ liệu thành công!');
     }
 
-   
     public function destroy($id)
     {
         $customer = Customer::find($id);

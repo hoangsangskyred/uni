@@ -9,6 +9,7 @@ use App\Models\TeamMember;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use App\Http\Requests\TeamMemberRequest;
 
 class TeamMemberController extends Controller
 {
@@ -42,47 +43,13 @@ class TeamMemberController extends Controller
             ->withController($this); 
     }
 
-    public function validateData(Request $request)
-    {
-        $request->validate([
-                'fullName' => 'required',
-                'title' => 'required',
-            ],[
-                'fullName.required' => 'Vui lòng cho biết Họ tên',
-                'title.required' => 'Vui lòng cho biết Nghề nghiệp/Chức vụ',
-            ]
-        );
-    }
-
-    public function fillDataToModel(array $validatedData, TeamMember $teamMember)
-     {
-        $teamMember->full_name  = $validatedData['fullName'];
-
-        $teamMember->title      = $validatedData['title'];
-
-        if ($validatedData['avatarPath'] != '')
-            $teamMember->avatar_path = $validatedData['avatarPath'];
-
-        $teamMember->show       = $validatedData['show'] ? 'Y' : 'N';
-    }
-
-    public function store(Request $request): RedirectResponse
+    public function store(TeamMemberRequest $request)
     {  
-        $this->validateData($request);
+        $teamMember = new TeamMember($request->all());
 
-        $needle = new TeamMember;
+        $teamMember->save();
 
-        $this->fillDataToModel($request->except('_token'), $needle);
-        
-        $needle->save();
-
-        if ($request->filled('saveAndCreate')) {
-            
-            return redirect()->route($this->name . '.create');
-
-        }
-
-        return redirect()->to( $this->getRedirectLink() )->withSuccess('Lưu dữ liệu thành công!');
+        return redirect()->to( $this->getRedirectLink() )->withSuccess('Lưu dữ liệu thành công!');   
     }
 
     public function edit(TeamMember $teamMember)
@@ -91,21 +58,17 @@ class TeamMemberController extends Controller
             ->withController($this);
     }
 
-    public function update(Request $request, TeamMember $teamMember)
+    public function update(TeamMemberRequest $request, TeamMember $teamMember)
     {
-        $this->validateData($request);
+        $teamMember->update($request->all());
 
-        $this->fillDataToModel($request->except(['_token', '_method']), $teamMember);
-        
-        $teamMember->save();
-
-        return redirect()->to($this->getRedirectLink())->withSuccess('Lưu dữ liệu thành công!');
+        return redirect()->to($this->getRedirectLink())->withSuccess('Lưu dữ liệu thành công!');   
     }
 
-    public function destroy(TeamMember $article)
+    public function destroy(TeamMember $teamMember)
     {
-        $article->delete();
+        $teamMember->delete();
 
-        return redirect()->to( $this->getRedirectLink() )->withSuccess('Xóa dữ liệu thành công!');
+        return redirect()->to($this->getRedirectLink())->withSuccess('Xóa dữ liệu thành công!');
     }
 }

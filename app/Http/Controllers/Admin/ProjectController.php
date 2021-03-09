@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\ProjectRequest;
 
 class ProjectController extends Controller
 {
@@ -25,7 +26,6 @@ class ProjectController extends Controller
         $list = Project::with('category')
             ->orderBy('created_at','desc')
             ->paginate(20);
-
         return $list;
     }
 
@@ -44,55 +44,13 @@ class ProjectController extends Controller
         return view($this->view . '.create', compact('needle'))
             ->withController($this);
     }
-
-    public function validateData(Request $request)
+    public function store(ProjectRequest $request)
     {
-        $request->validate([
-                'title' => 'required',
-                'content' => 'required'
-            ],[
-                'title.required' => 'Vui lòng cho biết Tên hiển thị',
-                'content.required' => 'Vui lòng cho biết Nội dung bài viết',
-            ]
-        );
-    }
+        $project = new Project($request->all());
 
-    public function fillDataToModel(array $validatedData, Project $project)
-     {   
-        $project->title     = $validatedData['title'];
+        $project->save();
 
-        $project->project_category_id = intval($validatedData['category']);
-
-        $project->avatar_path = $validatedData['avatarPath'];
-
-        $folder = pathinfo($project->avatar_path);
-
-        $project->folder_path = $folder['dirname'];
-
-        $images = File::files(public_path(str_replace('/public','',$project->folder_path)));
-
-        $project->photo_count = intval(count($images));
-
-        $project->show      = $validatedData['show'] ? 'Y' : 'N';
-
-        $project->content   = $validatedData['content'];
-    }
-
-    public function store(Request $request): RedirectResponse
-    {
-        $this->validateData($request);
-
-        $needle = new Project;
-
-        $this->fillDataToModel($request->except('_token'), $needle);
-   
-        $needle->save();
-
-        if ($request->filled('saveAndCreate')) {
-            return redirect()->route($this->name . '.create');
-        }
-
-        return redirect()->to( $this->getRedirectLink() )->withSuccess('Lưu dữ liệu thành công!');
+        return redirect()->to( $this->getRedirectLink() )->withSuccess('Lưu dữ liệu thành công!');    
     }
 
     public function edit(Project $project)
@@ -101,20 +59,18 @@ class ProjectController extends Controller
             ->withController($this);
     }
 
-    public function update(Request $request, Project $project)
+    public function update(ProjectRequest $request, Project $project)
     {
-        $this->validateData($request);
-
-        $this->fillDataToModel($request->except(['_token', '_method']), $project);
+        $project->update($request->all());
 
         $project->save();
 
-        return redirect()->to($this->getRedirectLink())->withSuccess('Lưu dữ liệu thành công!');
+        return redirect()->to($this->getRedirectLink())->withSuccess('Lưu dữ liệu thành công!');   
     }
 
-    public function destroy(Project $article)
+    public function destroy(Project $project)
     {
-        $article->delete();
+        $project->delete();
 
         return redirect()->to( $this->getRedirectLink() )->withSuccess('Xóa dữ liệu thành công!');
     }

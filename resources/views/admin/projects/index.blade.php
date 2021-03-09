@@ -5,7 +5,7 @@
 @section('page-content')
 
     <h1>@stack('page-title')</h1>
-
+    @include('layouts.inc.alerts')
     <div class="card">
         <div class="card-header">
             <div class="row">

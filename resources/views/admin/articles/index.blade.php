@@ -5,11 +5,7 @@
 @section('page-content')
 
     <h1>@stack('page-title')</h1>
-    @if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success')}}
-    </div>
-@endif
+    @include('layouts.inc.alerts')
     <div class="card">
         <div class="card-header">
             <div class="row">
@@ -59,7 +55,7 @@
                         </td>
                         <td>{{$item->display_name}}</td>
                         <td>{{$item->show=='Y'?'Hiển thị':'Ẩn'}}</td>
-                        <td>{{$item->display_name}}</td>
+                        <td>{{$item->created_at->format('d-m-Y H:i')}}</td>
                         <td class="text-end">
                             <a href="#" data-bs-toggle="modal" data-bs-target="#deleteRow{{$item->id}}Modal" class="text-danger">
                                 <i class="fas fa-times-circle"></i>

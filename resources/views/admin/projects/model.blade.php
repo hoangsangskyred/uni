@@ -10,13 +10,14 @@
         <div class="row mb-3">
             <div class="col-md-8">
                 <div class="form-floating mb-3">
-                    <select class="form-select" id="category" name="category">
-                        <option value="0">- chọn -</option>
+                    <select class="form-select" id="category" name="project_category_id">
+                        <option value="">- chọn -</option>
                         @foreach(\App\Models\ProjectCategory::orderBy('display_name')->get() as $projectCategory)
                             <option value="{{$projectCategory->id}}" {{old('category', $needle->project_category_id)==$projectCategory->id?'selected':''}}>{{$projectCategory->display_name}}</option>
                         @endforeach
                     </select>
                     <label for="category">Chủ đề</label>
+                    <div class="invalid-feedback"><i class="fas fa-exclamation-circle">Vui lòng chọn chủ đề</i></div>
                 </div>
             </div>
             <div class="col-md-4">
@@ -33,7 +34,7 @@
             <button type="button" id="lfm" data-input="avatarPath" class="btn btn-outline-secondary">
                 <i class="fas fa-photo"></i> Chọn hình
             </button>
-            <input id="avatarPath" class="form-control" type="text" name="avatarPath" value="{{old('avatarPath', $needle->avatar_path)}}" placeholder="Chọn hình đại diện cho dự án">
+            <input id="avatarPath" class="form-control" type="text" name="avatar_path" value="{{old('avatar_path', $needle->avatar_path)}}" placeholder="Chọn hình đại diện cho dự án">
         </div>
 
         <div class="row">

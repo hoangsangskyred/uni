@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\RedirectAfterSubmit;
 use App\Models\AboutUs;
 use Illuminate\Http\Request;
+use App\Http\Requests\AboutUsRequest;
 
 class AboutUsController extends Controller
 {
@@ -31,52 +32,24 @@ class AboutUsController extends Controller
 
     public function create()
     {
-        
         $needle = new AboutUs();
         
         return view($this->view . '.create', [ 'needle' => $needle ] )
             ->with(['controller' => $this]);
-
     }
 
-    public function fillDataToModel( array $validatedData, AboutUs $aboutUs )
+    public function store(AboutUsRequest $request )
     {
+        $aboutUs = new AboutUs(request()->all());
         
-        $aboutUs->title = $validatedData['title'];
+        $aboutUs->save();
+       
+        return redirect()->route($this->name . '.edit')->withSuccess('Lưu dữ liệu thành công!'); 
 
-        $aboutUs->content = $validatedData['content'];
-
-    }
-
-    public function store( Request $request )
-    {
-        $request->validate([
-                'title' => 'required', 
-                'content' => 'required'
-            ],[
-                'title.required' => 'Vui lòng nhập tiêu đề',
-                'content.required' => 'Vui lòng cung cấp nội dung chi tiết'
-            ]
-        );
-
-        $needle = new AboutUs();
-
-        $this->fillDataToModel($request->except('_token'), $needle);
-
-        if ($needle->save()) {
-
-            return redirect()->route($this->name . '.edit', [$needle]);
-
-        } else {
-
-            return redirect()->back()->withErrors(['Lỗi không xác định! Vui lòng báo với Quản trị viên']);
-
-        }
     }
 
     public function edit($id)
     {
-        
         $needle = AboutUs::find($id);
 
         return view($this->view . '.edit', ['needle' => $needle])
@@ -84,23 +57,12 @@ class AboutUsController extends Controller
 
     }
 
-    public function update(Request $request, $id)
+    public function update(AboutUsRequest $request, $id)
     {
+        $aboutUs = AboutUs::find($id);
 
-        $needle = AboutUs::find( $id);
-
-        if ($needle) {
-
-            $this->fillDataToModel($request->except(['_token', '_method']), $needle);
-
-            $needle->save();
-
-            return redirect()->route($this->name . '.edit', [$needle])->withSuccess('Lưu dữ liệu thành công!');
-
-        } else {
-
-            return redirect()->back()->withErrors(['Lỗi không xác định! Vui lòng báo với Quản trị viên']);
-
-        }
+        $aboutUs->update($request->all());
+        
+        return redirect()->back()->with('success','Lưu dữ liệu thành công!');    
     }
 }

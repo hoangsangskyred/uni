@@ -20,7 +20,7 @@ class Project extends Model
         'show'
     ];
     protected $attributes = [
-        'project_category_id' => 0,
+        'project_category_id' => 1,
         'avatar_path' => null,
         'title' => null,
         'content' => null,

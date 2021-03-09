@@ -24,7 +24,7 @@ class Service extends Model
         'title' => null,
         'description' => null,
         'content' => null,
-        'show' => 'Y'
+        'show' => 'Y' ?'Y':'N'
     ];
 
     public function setTitleAttribute($value)
