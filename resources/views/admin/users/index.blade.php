@@ -42,9 +42,10 @@
                             {{$item->last_login_at ? $item->last_login_at->format('d-m-Y H:i:S') : '-'}}
                         </th>
                         <td class="text-end">
-                            <a href="#" class="text-danger">
-                                <i class="fas fa-times"></i>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#deleteRow{{$item->id}}Modal" class="text-danger">
+                                <i class="fas fa-times-circle"></i>
                             </a>
+                            @include($controller->view . '.delete-modal', ['needle'=>$item])
                         </td>
                     </tr>
                 @empty

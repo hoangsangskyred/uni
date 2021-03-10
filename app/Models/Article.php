@@ -26,6 +26,7 @@ class Article extends Model
         'article_source_link',
     ];
     protected $attributes = [
+        'article_category_id' => 1,
         'avatar_path' => null,
         'title' => null,
         'description' => null,
@@ -38,6 +39,7 @@ class Article extends Model
             ->withDefault(['display_name' => '-', 'slug' => null]);
     }
 
+    
     public function setTitleAttribute($value)
     {
         $this->attributes['title'] = Str::title($value);
@@ -45,6 +47,7 @@ class Article extends Model
         $this->attributes['slug'] = implode('/', array_filter([$this->category->slug, Str::slug($this->attributes['title'])]));
     }
     
+
     public function getAvatarAttribute(): string
     {
         if ($this->attributes['avatar_path'] === null || $this->attributes['avatar_path'] == '' || !File::exists($this->attributes['avatar_path'])) {

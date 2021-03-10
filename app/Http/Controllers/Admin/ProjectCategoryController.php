@@ -22,7 +22,7 @@ class ProjectCategoryController extends Controller
         $list = ProjectCategory::withCount('projects')
             ->orderBy('display_name','asc')
             ->paginate(20);
-            
+
         return $list;
     }
 
@@ -36,9 +36,10 @@ class ProjectCategoryController extends Controller
 
     public function create()
     {
+
         return view($this->view . '.create')->withController($this);
+
     }
-    
     public function store(ProjectCategoryRequest $request)
     {
         $ProjectCategory = new ProjectCategory($request->all());

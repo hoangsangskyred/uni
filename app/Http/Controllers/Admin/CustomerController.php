@@ -36,7 +36,7 @@ class CustomerController extends Controller
             $query->where('gender', request('gender'));
         });
 
-        $list = $list->latest()->paginate( request('pageSize', 2) )->withQueryString();
+        $list = $list->latest()->paginate( request('pageSize', 5) )->withQueryString();
 
         return view($this->view .'.index', compact('list'))->withController($this);
     }

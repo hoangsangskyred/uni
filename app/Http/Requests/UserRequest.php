@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
+use App\Rules\UserPasswordValidation;
 class UserRequest extends FormRequest
 {
     /**
@@ -25,12 +26,12 @@ class UserRequest extends FormRequest
     {
         $rule = [
             'name' => 'required',
-            'email' =>  'required|regex:/(.+)@(.+)\.(.+)/i|email|unique:customers',
-            'role' => 'required',
+            'email' => 'required|email|unique:users',
+            'role' =>'required',
+            'password' => new UserPasswordValidation,
         ];
         
-        if (in_array($this->method(), ['PUT', 'PATCH'])) {
-            
+        if (in_array($this->method(), ['PUT', 'PATCH'])) { 
             $rule['email'] = 'required|regex:/(.+)@(.+)\.(.+)/i|unique:users,email,'.$this->user['id'];
         }
 
@@ -42,9 +43,11 @@ class UserRequest extends FormRequest
         return [
             'name.required' => 'Vui lòng cho biết Tên hiển thị',
             'email.required' => 'Vui lòng nhập địa chỉ email',
-            'email.regex' =>'Email không hợp lệ',
+            'email.email' => 'Email không hợp lệ',
             'email.unique'=> 'Email đã tồn tại',
+            'email.regex' => 'Email không hợp lệ',
             'role.required' => 'Vui lòng chọn vai trò của tài khoản này.',
+            'password.required' => 'Mật khẩu phải có ít nhất 5 ký tự',   
         ];
     }
 
@@ -52,7 +55,6 @@ class UserRequest extends FormRequest
     {
         $this->merge([
             'name' => Str::title($this->name),
-            'password'=>bcrypt($this->password)
-        ]);
+        ]);  
     }
 }
