@@ -34,7 +34,8 @@
 .title h1 span{display:inline-block; font-size:24px; color:#a58838; font-style:italic;}
 .title h1 strong{color:#a58838;}
 .welcome-wrap h3{font-weight:bold;}
-.welImg img{border:20px solid #fff;}
+.welImg img{/*border:20px solid #fff;*/ height: 600px; text-align: center;min-height: 100%;max-width: 600px;background-size: cover;
+}
 .welcome-wrap p{font-size:14px; line-height:24px; color:#818080;}
 .welcome-content-box {width: 100%; margin-top:30px;}
 .welcome-box h4 {display: block; font-size:18px; font-weight:bold; color: #a58838;}

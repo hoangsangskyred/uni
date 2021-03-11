@@ -25,7 +25,8 @@ Route::resources([
     'services' => ServiceController::class,
     'settings' => SettingController::class,
     'users' => UserController::class,
-    'customers' =>CustomerController::class,
+    'customers' => CustomerController::class,
+    'image-us' => AboutUsImageController::class,
 ]);
 Route::get('/search',[CustomerController::class,'search'])->name('customers.search');
 Route::post('/profile/reset-password', [ProfileController::class, 'resetPassword'])->name('profile.resetPassword');

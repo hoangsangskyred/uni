@@ -28,16 +28,14 @@ class ArticleCategoryController extends Controller
     public function index(Request $request)
     {
        $this->setRedirectLink($request);
-        
+
         return view($this->view . '.index', ['list' => $this->search($request)])
             ->withController($this);
-
     }
 
     public function create()
     {
         return view($this->view . '.create')->withController($this);
-
     }
 
     public function store(ArticleCategoryRequest $request)
@@ -46,8 +44,7 @@ class ArticleCategoryController extends Controller
         
         $articleCategory->save();
 
-        return redirect()->to( $this->getRedirectLink() )->withSuccess('Lưu dữ liệu thành công!');
-        
+        return redirect()->to( $this->getRedirectLink() )->withSuccess('Lưu dữ liệu thành công!');     
     }
 
     public function edit(ArticleCategory $articleCategory)

@@ -26,11 +26,10 @@ class UserPasswordValidation implements Rule
      */
     public function passes($attribute, $value)
     {
-        if(Str::length($value) <= 5)
-        {
+        if(Str::length($value) <= 5) {
             return false;
         }
-
+        
         return  true;
     }
 
@@ -41,6 +40,6 @@ class UserPasswordValidation implements Rule
      */
     public function message()
     {
-        return 'mật khẩu phải có ít nhất 6 ký tự';
+        return 'Mật khẩu phải có ít nhất 6 ký tự';
     }
 }

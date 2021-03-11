@@ -107,7 +107,9 @@
                     </div>
                 </div>
                 <div class="col-md-5">
-                    <div class="welImg"><img src="/public/img/welcomeImg.jpg" alt=""></div>
+                    @foreach(\App\Models\AboutUsImage::where('show','Y')->limit(1)->get() as $aboutUsImage)
+                         <div class="welImg" style=" overflow: hidden; text-align: center;"><img src="{{$aboutUsImage->image_path}}" alt=""></div>
+                    @endforeach
                 </div>
             </div>
         </div>

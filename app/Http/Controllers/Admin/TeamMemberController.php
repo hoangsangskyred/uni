@@ -37,7 +37,7 @@ class TeamMemberController extends Controller
 
     public function create()
     {     
-        $needle = session('importedArticle', new Article);
+        $needle = new TeamMember();
 
         return view($this->view . '.create', compact('needle'))
             ->withController($this); 

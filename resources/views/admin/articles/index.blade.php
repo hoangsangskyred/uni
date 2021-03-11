@@ -18,8 +18,8 @@
                            <div class="justify-content-start d-flex align-items-start mr-2">
                                <select class="form-select" name="display_name">
                                    <option value="">Chọn Chủ đề</option>
-                                @foreach ($articleLists as $articleList)
-                                    <option value="{{$articleList->id}}" @if( request('display_name') == $articleList->id ) ? selected @endif>{{ $articleList->display_name }}</option> 
+                                @foreach ($articleCategories as $articleCategory)
+                                    <option value="{{$articleCategory->id}}" @if( request('display_name') == $articleCategory->id ) ? selected @endif>{{ $articleCategory->display_name }}</option> 
                                 @endforeach
                                 </select>
                             </div>
@@ -53,7 +53,7 @@
                         <td>
                             <a href="{{route($controller->name . '.edit',$item->id)}}">{{$item->title}}</a>
                         </td>
-                        <td>{{$item->display_name}}</td>
+                        <td>{{$item->category->display_name}}</td>
                         <td>{{$item->show=='Y'?'Hiển thị':'Ẩn'}}</td>
                         <td>{{$item->created_at->format('d-m-Y H:i')}}</td>
                         <td class="text-end">

@@ -25,14 +25,11 @@ class ArticleController extends Controller
     {      
         $search = $request->get('q');
 
-        $list = Article::with('category')
-        ->Join('article_categories', 'articles.article_category_id', '=', 'article_categories.id')
-        ->select('articles.*','article_categories.display_name'); 
+        $list = Article::with('category');
     
         $list->when( request('q') !== null, function ($query) {
             $query->where(function ($query){
-                $query->where('title', 'LIKE', '%' . request('q') . '%')
-                ->orWhere('display_name', 'LIKE', '%' . request('q') . '%');
+                $query->where('title', 'LIKE', '%' . request('q') . '%');
              });            
          })->when( request('display_name') !== null, function ($query) {
              $query->where('article_category_id', request('display_name'));
@@ -45,11 +42,11 @@ class ArticleController extends Controller
 
     public function index(Request $request)
     {
-        $articleLists = ArticleCategory::all();
+        $articleCategories = ArticleCategory::all();
         
         $this->setRedirectLink($request);
        
-        return view($this->view . '.index', ['list' => $this->search($request),'articleLists'=> $articleLists])
+        return view($this->view . '.index', ['list' => $this->search($request),'articleCategories'=> $articleCategories])
         ->withController($this); 
     }
 
@@ -63,29 +60,23 @@ class ArticleController extends Controller
 
     public function showCrawlForm()
     {
-
         return view($this->view . '.crawl')->withController($this);
-
     }
 
     public function crawl(Request $request)
     {
-         $source = new ArticleSourceLink($request->input('sourceLink'));
+        $source = new ArticleSourceLink($request->input('sourceLink'));
 
         $source->article->article_category_id = $request->input('category');
 
         $source->observer->scrape();
 
         if ($source->observer) {
-
             $source->article->save();
 
             return redirect()->to($this->getRedirectLink())->withSuccess('Lưu dữ liệu thành công!');
-
         } else {
-
             return redirect()->to($this->getRedirectLink())->withErrors(['Lỗi! Không thể truy xuất website đã cung cấp.']);
-
         }
     }
 
@@ -107,9 +98,8 @@ class ArticleController extends Controller
     public function update(ArticleRequest $request, Article $article)
     {
         $article->update($request->all());
-
+        
         return redirect()->to($this->getRedirectLink())->withSuccess('Lưu dữ liệu thành công!');
-
     }
 
     public function destroy(Article $article)

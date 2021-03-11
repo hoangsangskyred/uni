@@ -20,20 +20,16 @@ class AboutUsController extends Controller
         $needle = AboutUs::first();
         
         if ( $needle ) {
-
             return redirect()->route( $this->name . '.edit', [$needle] );
-
         } else {
-
             return redirect()->route($this->name . '.create');
         }
-
     }
 
     public function create()
     {
         $needle = new AboutUs();
-        
+      
         return view($this->view . '.create', [ 'needle' => $needle ] )
             ->with(['controller' => $this]);
     }
@@ -45,7 +41,6 @@ class AboutUsController extends Controller
         $aboutUs->save();
        
         return redirect()->route($this->name . '.edit')->withSuccess('Lưu dữ liệu thành công!'); 
-
     }
 
     public function edit($id)
@@ -54,7 +49,6 @@ class AboutUsController extends Controller
 
         return view($this->view . '.edit', ['needle' => $needle])
             ->with(['controller' => $this]);
-
     }
 
     public function update(AboutUsRequest $request, $id)

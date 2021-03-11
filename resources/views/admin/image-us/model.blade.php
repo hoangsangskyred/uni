@@ -1,48 +1,27 @@
 <div class="row">
     <div class="col-md-8 mx-auto">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control text-capitalize" id="full_name" name="full_name" placeholder="Tên hiển thị" value="{{old('full_name', $needle->full_name)}}" required
+                    <input type="text" class="form-control text-capitalize" id="title" name="title" placeholder="Tên hiển thị" value="{{old('title', $needle->title)}}" required
                            autofocus>
-                    <label for="full_name">Tên hiển thị</label>
+                    <label for="title">Tên hiển thị</label>
                     <div class="invalid-feedback"><i class="fas fa-exclamation-circle"></i> Không được rỗng</div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control text-capitalize" id="title" name="title" placeholder="Nghề nghiệp / Chức vụ" value="{{old('title', $needle->title)}}" required>
-                    <label for="title">Nghề nghiệp / Chức vụ</label>
-                    <div class="invalid-feedback"><i class="fas fa-exclamation-circle"></i> Không được rỗng</div>
-                </div>
-            </div>
-        </div>
-
+        
         <div class="form-group mb-3">
             <div class="input-group">
-                <button type="button" id="lfm" data-input="avatarPath" class="btn btn-outline-secondary">
-                    <i class="fas fa-photo"></i> Chọn avatar
+                <button type="button" id="lfm" data-input="image_path" class="btn btn-outline-secondary">
+                    <i class="fas fa-photo"></i> Chọn Hình ảnh
                 </button>
-                <input id="avatarPath" class="form-control" type="text" name="avatar_path" value="{{old('avatar_path', $needle->avatar_path)}}" placeholder="Chọn hình đại diện cho dự án">
+                <input id="image_path" class="form-control" type="text" name="image_path" value="{{old('image_path', $needle->image_path)}}" placeholder="Chọn hình đại diện cho trang giới thiệu">
             </div>
             <small class="text-muted"><i class="fas fa-exclamation-circle"></i> Hiển thị đẹp nhất với kích thước 270 x 320 px</small>
         </div>
-
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="facebook" name="facebook" placeholder="Link facebook" value="{{old('facebook', $needle->facebook)}}">
-            <label for="facebook">Link Facebook</label>
-            <div class="invalid-feedback"><i class="fas fa-exclamation-circle"></i> Không được rỗng</div>
-        </div>
-
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="twitter" name="twitter" placeholder="Link Twitter" value="{{old('twitter', $needle->twitter)}}">
-            <label for="twitter">Link Twitter</label>
-            <div class="invalid-feedback"><i class="fas fa-exclamation-circle"></i> Không được rỗng</div>
-        </div>
-
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="linkedId" name="linkedId" placeholder="Link LinkedIn" value="{{old('linkedId', $needle->linkedid)}}">
-            <label for="linkedId">Link LinkedIn</label>
+            <input type="text" class="form-control" id="description" name="description" placeholder="Miêu tả về hình ảnh" value="{{old('description', $needle->description)}}" height="50px">
+            <label for="twitter">Miểu tả</label>
             <div class="invalid-feedback"><i class="fas fa-exclamation-circle"></i> Không được rỗng</div>
         </div>
 

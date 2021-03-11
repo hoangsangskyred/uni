@@ -18,6 +18,9 @@
                 <li>
                     <a href="{{route('admin.team-members.index')}}">Đội ngũ chuyên gia</a>
                 </li>
+                <li>
+                    <a href="{{route('admin.image-us.index')}}">Hình ảnh trang chủ</a>
+                </li>
             </ul>
         </li>
         <li>
