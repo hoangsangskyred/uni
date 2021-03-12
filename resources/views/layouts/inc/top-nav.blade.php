@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-default">
+<nav class="navbar navbar-expand-lg navbar-default navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{route('web.index')}}">
             <img src="/public/img/logo_185x60.png">

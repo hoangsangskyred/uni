@@ -12,7 +12,7 @@ class TeamMember extends Model
 
     protected $table = 'team_members';
     protected $fillable = [
-        'full_name', 'title', 'phone', 'facebook', 'twitter', 'linkedin', 'show'
+        'full_name','avatar_path','title', 'phone', 'facebook', 'twitter', 'linkedin', 'show'
     ];
     protected $attributes = [
         'full_name' => null, 'avatar_path' => '/public/img/default-avatar.jpg',

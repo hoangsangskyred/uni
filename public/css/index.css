@@ -34,8 +34,10 @@
 .title h1 span{display:inline-block; font-size:24px; color:#a58838; font-style:italic;}
 .title h1 strong{color:#a58838;}
 .welcome-wrap h3{font-weight:bold;}
-.welImg img{/*border:20px solid #fff;*/ height: 600px; text-align: center;min-height: 100%;max-width: 600px;background-size: cover;
-}
+.aboutImage{position: relative;margin: 0 auto;}
+.aboutImage .welImg img{ height: 550px; text-align: center;min-height: 100%;background-size: cover; vertical-align: middle; max-width: 100%; border: 20px solid #fff;}
+.aboutImage .text-block{  position: absolute; bottom: 0;background: rgb(0, 0, 0); background: rgba(0, 0, 0, 0.5); color: #f1f1f1;width: 95.1%;padding: 20px;}
+.text-block .text-block-hightlight {color:#f1f1f1 !important; font-size: 17px;}
 .welcome-wrap p{font-size:14px; line-height:24px; color:#818080;}
 .welcome-content-box {width: 100%; margin-top:30px;}
 .welcome-box h4 {display: block; font-size:18px; font-weight:bold; color: #a58838;}
@@ -129,3 +131,4 @@
     transition: all 0.4s ease-in-out 0s;
     bottom: 0px;
 }
+

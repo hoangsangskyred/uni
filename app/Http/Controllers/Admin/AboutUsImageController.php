@@ -31,7 +31,7 @@ class AboutUsImageController extends Controller
         $this->setRedirectLink($request);
 
         return view($this->view . '.index', ['list' => $this->search($request)])
-        ->withController($this);
+            ->withController($this);
     }
 
     public function create()
@@ -48,8 +48,7 @@ class AboutUsImageController extends Controller
 
         $AboutUsImage->save();
 
-        return redirect()->to( $this->getRedirectLink() )->withSuccess('Lưu dữ liệu thành công!');
-        
+        return redirect()->to( $this->getRedirectLink() )->withSuccess('Lưu dữ liệu thành công!');   
     }
 
     public function edit($id)
@@ -62,6 +61,8 @@ class AboutUsImageController extends Controller
 
     public function update(AboutUsImageRequest $request, $id)
     {
+        AboutUsImage::where('id','<>',$id)->update(['show' => 'N']);
+
         $aboutUsImage = AboutUsImage::find($id);
 
         $aboutUsImage->update($request->all());
@@ -72,6 +73,11 @@ class AboutUsImageController extends Controller
     public function destroy($id)
     {
         $aboutUsImage = AboutUsImage::find($id);
+        
+        if($aboutUsImage->show == 'Y')
+        {
+            return redirect()->back()->withErrors('Hình ảnh đang hiển thị không thể xóa');
+        }
 
         $aboutUsImage->delete();
 

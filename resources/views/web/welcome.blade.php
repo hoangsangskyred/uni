@@ -34,87 +34,8 @@
     <!-- Slider end -->
 
     <!--Furniture start-->
-    <div class="furniture-wrap">
-        <div class="container">
-            <ul class="furniture-service">
-                <li><a href="#">
-                        <div class="furniture">
-                            <div class="icon"><img src="/public/img/furniture/bed.png" alt=""></div>
-                            <h3>Phòng ngủ</h3>
-                        </div>
-                    </a> </li>
-                <li><a href="#">
-                        <div class="furniture">
-                            <div class="icon"><img src="/public/img/furniture/office.png" alt=""></div>
-                            <h3>Văn phòng</h3>
-                        </div>
-                    </a> </li>
-                <li><a href="#">
-                        <div class="furniture">
-                            <div class="icon"><img src="/public/img/furniture/interior.png" alt=""></div>
-                            <h3>Biệt thự</h3>
-                        </div>
-                    </a> </li>
-                <li><a href="#">
-                        <div class="furniture">
-                            <div class="icon"><img src="/public/img/furniture/waiting-room.png" alt=""></div>
-                            <h3>Căn hộ</h3>
-                        </div>
-                    </a> </li>
-                <li><a href="#">
-                        <div class="furniture">
-                            <div class="icon"><img src="/public/img/furniture/bathroom.png" alt=""></div>
-                            <h3>Phòng tắm</h3>
-                        </div>
-                    </a> </li>
-                <li><a href="#">
-                        <div class="furniture">
-                            <div class="icon"><img src="/public/img/furniture/interior.png" alt=""></div>
-                            <h3>Nội thất</h3>
-                        </div>
-                    </a> </li>
-            </ul>
-        </div>
-    </div>
+   
     <!--Furniture end-->
-
-    <!--Welcome start-->
-    <div class="welcome-wrap">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-7">
-                    <div class="title">
-                        <h1><span>Chúc mừng đến với</span> UniqueHouse <strong>Architecture</strong></h1>
-                    </div>
-                    <h3>Đơn vị tiên phong trong lĩnh vực thiết kế nội thất.</h3>
-                    <p>Với đội ngũ kỹ sư trẻ đầy sáng tạo và năng động, chúng tôi đã mang đến cho khách hàng những sản phẩm thiết kế vô cùng hiện đại, sang trọng, ...  </p>
-                    <div class="welcome-content-box row">
-                        <div class="col-md-4 col-sm-4 welcome-box">
-                            <div class="houseIcon"><img src="/public/img/house.png" alt=""></div>
-                            <h4>Biệt thự - Nhà phố</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis facilisis leo eget.</p>
-                        </div>
-                        <div class="col-md-4 col-sm-4 welcome-box">
-                            <div class="houseIcon"><img src="/public/img/house2.png" alt=""></div>
-                            <h4>Nhà hàng - Cà phê</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis facilisis leo eget.</p>
-                        </div>
-                        <div class="col-md-4 col-sm-4 welcome-box">
-                            <div class="houseIcon"><img src="/public/img/house5.png" alt=""></div>
-                            <h4>Khu nghỉ dưỡng - Spa</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis facilisis leo eget.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    @foreach(\App\Models\AboutUsImage::where('show','Y')->limit(1)->get() as $aboutUsImage)
-                         <div class="welImg" style=" overflow: hidden; text-align: center;"><img src="{{$aboutUsImage->image_path}}" alt=""></div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--Welcome end-->
 
     <!--Project Start-->
     <div class="project-wrap">
@@ -196,7 +117,44 @@
         </div>
     </div>
     <!--Project End-->
-
+ <!--Welcome start-->
+    <div class="welcome-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="title">
+                        <h1><span>Chúc mừng đến với</span> UniqueHouse <strong>Architecture</strong></h1>
+                    </div>
+                    <h3>Đơn vị tiên phong trong lĩnh vực thiết kế nội thất.</h3>
+                    <p>Với đội ngũ kỹ sư trẻ đầy sáng tạo và năng động, chúng tôi đã mang đến cho khách hàng những sản phẩm thiết kế vô cùng hiện đại, sang trọng, ...  </p>
+                    <div class="welcome-content-box row">
+                        <div class="col-md-4 col-sm-4 welcome-box">
+                            <div class="houseIcon"><img src="/public/img/house.png" alt=""></div>
+                            <h4>Biệt thự - Nhà phố</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis facilisis leo eget.</p>
+                        </div>
+                        <div class="col-md-4 col-sm-4 welcome-box">
+                            <div class="houseIcon"><img src="/public/img/house2.png" alt=""></div>
+                            <h4>Nhà hàng - Cà phê</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis facilisis leo eget.</p>
+                        </div>
+                        <div class="col-md-4 col-sm-4 welcome-box">
+                            <div class="houseIcon"><img src="/public/img/house5.png" alt=""></div>
+                            <h4>Khu nghỉ dưỡng - Spa</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis facilisis leo eget.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 aboutImage">
+                    @foreach(\App\Models\AboutUsImage::where('show','Y')->limit(1)->get() as $aboutUsImage)
+                         <div class="welImg" style=" overflow: hidden;"><img src="{{$aboutUsImage->image_path}}" alt=""></div>
+                         <div class="text-block"><span class="text-block-hightlight">{{ $aboutUsImage->description }}</span></div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+     <!--Welcome end-->
     <!--Team Start-->
     <div class="team-wrap">
         <div class="container">

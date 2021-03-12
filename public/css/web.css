@@ -264,3 +264,75 @@ body.cke_editable {padding: 1rem !important;}
     font-size: 14px;
     line-height: 26px;
 }
+
+/*-----------@media---------------*/
+
+@media screen and(max-width:420px)
+{
+    .welcome-content-box {
+        width: 100%;
+    }
+
+    
+}
+@media screen and (max-width: 767px)
+{
+.welcome-content-box {
+    text-align: center;
+    width: auto;
+}
+}
+@media screen  and (min-width: 992px)
+{  .navbar-default
+    {   background: rgba(0, 0, 0, 0.66) !important}
+    .navbar-default .navbar-nav>li>a {
+        color: #fff !important;   
+    }
+   
+}
+
+@media screen and (max-width: 1024px){
+    .navbar-default
+    {
+        background: rgba(0, 0, 0, 0.66);
+    }
+    .navbar-default ul 
+    {
+    }
+    .navbar-default ul li
+    {
+        margin-top: -20px;
+    }
+
+    .navbar-default .navbar-nav>li>a 
+    {
+        color: #fff !important;
+        float: right;
+    }
+    .navbar-default .dropdown-menu
+    {
+        margin: 10px auto;
+        height: auto;
+        float: right;
+        margin-top: 50px;
+    }
+    .navbar-default .dropdown-menu li> a
+    {
+        top: 30px;
+        margin-top: 20px;
+    }
+
+    .aboutImage .text-block
+    {
+        
+    }
+    .welcome-content-box .welcome-box
+    {
+       text-align: center;
+    }
+    .aboutImage .welImg {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+} 
